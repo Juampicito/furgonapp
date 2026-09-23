@@ -1,0 +1,25 @@
+spring:
+  application:
+    name: furgonapp
+  datasource:
+    url: ${DATABASE_URL:jdbc:postgresql://localhost:5432/furgonapp}
+    username: ${DATABASE_USER:furgonapp}
+    password: ${DATABASE_PASSWORD:furgonapp_dev}
+  jpa:
+    open-in-view: false
+    hibernate:
+      ddl-auto: validate
+  servlet:
+    multipart:
+      max-file-size: 5MB
+      max-request-size: 6MB
+server:
+  address: ${SERVER_ADDRESS:127.0.0.1}
+  port: 8080
+  error:
+    include-message: never
+app:
+  demo: false
+  jwt-secret: ${JWT_SECRET:}
+  cors-origin: ${FRONTEND_URL:http://localhost:3000}
+  max-price-deviation-percentage: ${MAX_PRICE_DEVIATION_PERCENTAGE:25}

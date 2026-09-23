@@ -1,0 +1,12 @@
+import fs from 'node:fs/promises';
+import path from 'node:path';
+import { createHash } from 'node:crypto';
+const directory = path.resolve(process.argv[2] ?? '.tools');
+const url = 'https://repo.maven.apache.org/maven2/org/apache/maven/apache-maven/3.9.11/apache-maven-3.9.11-bin.zip';
+const [binary, checksum] = await Promise.all([fetch(url), fetch(`${url}.sha512`)]);
+if (!binary.ok || !checksum.ok) throw new Error('No se pudo descargar Maven.');
+const data = Buffer.from(await binary.arrayBuffer());
+const expected = (await checksum.text()).trim().split(/\s+/)[0];
+if (createHash('sha512').update(data).digest('hex') !== expected) throw new Error('SHA-512 incorrecto.');
+await fs.mkdir(directory, { recursive: true });
+await fs.writeFile(path.join(directory, 'maven.zip'), data);

@@ -1,0 +1,42 @@
+services:
+  postgres:
+    image: postgres:17-alpine
+    environment:
+      POSTGRES_DB: furgonapp
+      POSTGRES_USER: furgonapp
+      POSTGRES_PASSWORD: ${DATABASE_PASSWORD:-furgonapp_dev}
+    ports:
+      - "127.0.0.1:5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U furgonapp -d furgonapp"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+  backend:
+    build: ./backend
+    environment:
+      SPRING_PROFILES_ACTIVE: demo
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/furgonapp
+      SPRING_DATASOURCE_USERNAME: furgonapp
+      SPRING_DATASOURCE_PASSWORD: ${DATABASE_PASSWORD:-furgonapp_dev}
+      SERVER_ADDRESS: 0.0.0.0
+      APP_JWT_SECRET: ${JWT_SECRET:-development-only-secret-at-least-32-characters-furgonapp}
+      MAX_PRICE_DEVIATION_PERCENTAGE: ${MAX_PRICE_DEVIATION_PERCENTAGE:-25}
+    ports:
+      - "127.0.0.1:8080:8080"
+    depends_on:
+      postgres:
+        condition: service_healthy
+  frontend:
+    build: ./frontend
+    environment:
+      API_URL: http://backend:8080
+      GOOGLE_MAPS_BROWSER_KEY: ${GOOGLE_MAPS_BROWSER_KEY:-}
+    ports:
+      - "127.0.0.1:3000:3000"
+    depends_on:
+      - backend
+volumes:
+  postgres_data:
