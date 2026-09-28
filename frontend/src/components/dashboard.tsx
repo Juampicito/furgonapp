@@ -158,7 +158,7 @@ export function Dashboard({ section }: { section: string }) {
           </div>
           <button className="switch-role" onClick={logout}>
             <LogOut size={17} />
-            Cambiar de perfil
+            Cerrar sesión
             <ArrowUpRight size={15} />
           </button>
           <div className="sidebar-user">
@@ -167,7 +167,7 @@ export function Dashboard({ section }: { section: string }) {
               <strong>
                 {data.user.firstName} {data.user.lastName}
               </strong>
-              <small>{roleNames[role]} · Demo</small>
+              <small>{roleNames[role]}</small>
             </div>
           </div>
         </div>
@@ -188,7 +188,7 @@ export function Dashboard({ section }: { section: string }) {
           </div>
           <div className="topbar-actions">
             <span className="demo-pill">
-              <span /> Modo demo
+              <span /> Mi cuenta
             </span>
             <button
               className="icon-button"
@@ -239,7 +239,7 @@ export function Dashboard({ section }: { section: string }) {
           {content()}
           <footer className="dashboard-footer">
             <span>FurgonApp · Conectamos tu comunidad</span>
-            <span>Primera edición / Demo</span>
+            <span>Transporte escolar</span>
           </footer>
         </main>
       </div>

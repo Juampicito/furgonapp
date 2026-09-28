@@ -37,21 +37,14 @@ class WorkflowIntegrationTest {
   Repositories r;
 
   String token(Role role) throws Exception {
-    return json
-      .readTree(
-        mvc
-          .perform(
-            post("/api/auth/demo")
-              .contentType("application/json")
-              .content(json.writeValueAsString(Map.of("role", role)))
-          )
-          .andExpect(status().isOk())
-          .andReturn()
-          .getResponse()
-          .getContentAsString()
-      )
-      .get("token")
-      .asText();
+    return login(
+      switch (role) {
+        case ADMIN -> "admin@furgonapp.demo";
+        case FURGONISTA -> "carlos@furgonapp.demo";
+        case APODERADO -> "maria@furgonapp.demo";
+        case COLEGIO -> "sanmarcos@furgonapp.demo";
+      }
+    );
   }
 
   String login(String email) throws Exception {

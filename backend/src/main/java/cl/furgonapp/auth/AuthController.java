@@ -6,7 +6,6 @@ import jakarta.validation.Valid;
 import jakarta.validation.constraints.*;
 import java.time.Instant;
 import java.util.Map;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.jose.jws.MacAlgorithm;
 import org.springframework.security.oauth2.jwt.*;
@@ -19,55 +18,70 @@ public class AuthController {
   private final UserRepository users;
   private final JwtEncoder encoder;
   private final PasswordEncoder passwords;
-  private final boolean demo;
+  private final AccountService accounts;
+  private final AuthAttempts attempts;
+  private final String dummyHash;
 
   public AuthController(
     UserRepository u,
     JwtEncoder e,
     PasswordEncoder p,
-    @Value("${app.demo}") boolean d
+    AccountService accounts,
+    AuthAttempts attempts
   ) {
     users = u;
     encoder = e;
     passwords = p;
-    demo = d;
+    this.accounts = accounts;
+    this.attempts = attempts;
+    dummyHash = passwords.encode(java.util.UUID.randomUUID().toString());
   }
 
   public record Login(
-    @Email @NotBlank String email,
-    @NotBlank String password
+    @Email @NotBlank @Size(max = 254) String email,
+    @NotBlank @Size(max = 72) String password
   ) {}
-
-  public record Demo(@NotNull Role role) {}
 
   @GetMapping("/config")
   public Map<String, Boolean> config() {
-    return Map.of("demo", demo);
+    return Map.of("demo", false, "registration", true);
   }
 
   @PostMapping("/login")
-  public Map<String, Object> login(@Valid @RequestBody Login body) {
-    var u = users
-      .findByEmailIgnoreCase(body.email())
-      .orElseThrow(ApiException::forbidden);
+  public Map<String, Object> login(
+    @Valid @RequestBody Login body,
+    jakarta.servlet.http.HttpServletRequest request
+  ) {
+    String bucket = "login:" + request.getRemoteAddr();
+    attempts.check(bucket, 30);
+    var u = users.findByEmailIgnoreCase(body.email().strip()).orElse(null);
     if (
-      !passwords.matches(body.password(), u.passwordHash)
-    ) throw ApiException.forbidden();
+      !passwords.matches(
+        body.password(),
+        u == null ? dummyHash : u.passwordHash
+      ) ||
+      u == null ||
+      !u.active
+    ) {
+      attempts.record(bucket);
+      throw new ApiException(
+        org.springframework.http.HttpStatus.UNAUTHORIZED,
+        "Correo o contraseña incorrectos, o cuenta desactivada."
+      );
+    }
     return token(u);
   }
 
-  @PostMapping("/demo")
-  public Map<String, Object> demo(@Valid @RequestBody Demo body) {
-    if (!demo) throw ApiException.missing();
-    var email = switch (body.role()) {
-      case ADMIN -> "admin@furgonapp.demo";
-      case FURGONISTA -> "carlos@furgonapp.demo";
-      case APODERADO -> "maria@furgonapp.demo";
-      case COLEGIO -> "sanmarcos@furgonapp.demo";
-    };
-    return token(
-      users.findByEmailIgnoreCase(email).orElseThrow(ApiException::missing)
-    );
+  @PostMapping("/register")
+  @ResponseStatus(org.springframework.http.HttpStatus.CREATED)
+  public Map<String, Object> register(
+    @Valid @RequestBody AccountService.Registration body,
+    jakarta.servlet.http.HttpServletRequest request
+  ) {
+    String bucket = "register:" + request.getRemoteAddr();
+    attempts.check(bucket, 15);
+    attempts.record(bucket);
+    return token(accounts.register(body));
   }
 
   private Map<String, Object> token(User u) {

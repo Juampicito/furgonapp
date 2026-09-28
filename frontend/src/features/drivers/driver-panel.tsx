@@ -167,7 +167,7 @@ export function DriverSetup({ initialStep = 0 }: { initialStep?: number }) {
           <h3>Verificación del perfil</h3>
           <p>
             Una vez completados los cuatro pasos, un administrador podrá revisar tus documentos y
-            aprobar tu perfil. En esta demo la revisión es manual y simulada.
+            aprobar tu perfil. La revisión la realiza el equipo de administración.
           </p>
         </div>
         <Button

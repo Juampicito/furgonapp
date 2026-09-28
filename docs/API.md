@@ -5,8 +5,8 @@ Prefijo: `/api`. Autenticación: `Authorization: Bearer <JWT>`. Los cuerpos JSON
 | Método y ruta | Permiso | Operación |
 |---|---|---|
 | `GET /health` | Público | Estado del proceso |
-| `GET /auth/config` | Público | Indica si está habilitada la demo |
-| `POST /auth/demo` | Solo con demo activa | `{ "role": "APODERADO" }` → JWT y usuario |
+| `GET /auth/config` | Público | `{ "demo": false, "registration": true }` |
+| `POST /auth/register` | Público | `{ "email": "...", "password": "...", "firstName": "...", "lastName": "...", "role": "APODERADO" }` → 201, JWT y usuario; admite APODERADO, FURGONISTA y COLEGIO |
 | `POST /auth/login` | Público | `{ "email": "...", "password": "..." }` → JWT y usuario |
 | `GET /workspace` | Autenticado, cuenta activa | Datos del panel filtrados por rol y propietario |
 | `PUT /users/{id}` | Propietario / ADMIN | Nombre, apellido, RUT, teléfono, correo, dirección |
@@ -36,6 +36,8 @@ Prefijo: `/api`. Autenticación: `Authorization: Bearer <JWT>`. Los cuerpos JSON
 | `PATCH /admin/drivers/{id}` | ADMIN | Estado y motivo; aprobar exige perfil y documentos completos |
 
 Las listas de instituciones, usuarios, documentos, cotizaciones, contratos y notificaciones se entregan mediante `/workspace`, con DTOs y alcance apropiado a cada rol. No hay un endpoint que permita crear contratos directamente ni cambiar libremente el estado de una cotización.
+
+El acceso `/auth/demo` fue eliminado. Registro: contraseñas de 12 caracteres como mínimo y 72 bytes como máximo, correo normalizado y único; duplicados retornan 409 y ADMIN retorna 403. Login inválido o desactivado retorna 401. Límite local de 30 intentos fallidos de login o 15 intentos de registro por IP en 15 minutos (429). No se confía en cabeceras reenviadas del cliente; al desplegar detrás de un proxy, configurar límites compartidos en el ingreso. Las contraseñas se almacenan únicamente como BCrypt; los JWT duran 8 horas y cada operación comprueba que la cuenta siga activa.
 
 ## Solicitar cotización
 

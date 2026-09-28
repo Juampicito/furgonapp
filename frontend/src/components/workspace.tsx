@@ -35,7 +35,10 @@ export function WorkspaceProvider({
     setError('');
   }, [rolePath]);
   useEffect(() => {
-    refresh().catch((e) => setError(e.message));
+    refresh().catch((e) => {
+      if (e instanceof ApiError && (e.status === 401 || e.status === 403)) logout();
+      else setError(e.message);
+    });
   }, [refresh]);
   useEffect(() => {
     if (!toast) return;

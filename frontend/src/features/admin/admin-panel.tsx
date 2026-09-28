@@ -60,7 +60,7 @@ export function AdminPanel({ section }: { section: string }) {
           </div>
           <div className="soft-note">
             <ShieldText />
-            La aprobación de documentos en esta versión es manual y simulada. No se consultan
+            La aprobación de documentos es manual. No se consultan
             registros gubernamentales.
           </div>
         </>

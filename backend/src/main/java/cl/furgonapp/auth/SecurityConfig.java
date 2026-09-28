@@ -24,7 +24,7 @@ public class SecurityConfig {
   @Bean
   SecretKeySpec secret(@Value("${app.jwt-secret}") String value) {
     if (value.length() < 32) throw new IllegalStateException(
-      "JWT_SECRET debe contener al menos 32 caracteres; usa el perfil demo solo en desarrollo."
+      "JWT_SECRET debe contener al menos 32 caracteres aleatorios."
     );
     return new SecretKeySpec(
       value.getBytes(StandardCharsets.UTF_8),

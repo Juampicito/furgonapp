@@ -32,7 +32,7 @@ before(async () => {
   if (!process.env.TEST_API_URL) {
     fs.mkdirSync(path.join(root, '.tools'), { recursive: true });
     const log = fs.openSync(path.join(root, '.tools/api-test-server.log'), 'w');
-    backend = spawn('java', ['-jar', 'target/furgonapp-0.1.0.jar', '--spring.profiles.active=demo', '--server.port=8081', '--spring.datasource.url=jdbc:h2:mem:api-tests;MODE=PostgreSQL;DATABASE_TO_LOWER=TRUE;DB_CLOSE_DELAY=-1'], { cwd: path.join(root, 'backend'), stdio: ['ignore', log, log], windowsHide: true });
+    backend = spawn('java', ['-jar', 'target/furgonapp-0.1.0.jar', '--spring.profiles.active=test', '--server.port=8081', '--spring.datasource.url=jdbc:h2:mem:api-tests;MODE=PostgreSQL;DATABASE_TO_LOWER=TRUE;DB_CLOSE_DELAY=-1'], { cwd: path.join(root, 'backend'), stdio: ['ignore', log, log], windowsHide: true });
     backend.on('error', e => { throw e; });
     let ready = false;
     for (let i = 0; i < 120; i++) {
@@ -44,7 +44,7 @@ before(async () => {
   }
   for (const role of ['ADMIN', 'FURGONISTA', 'APODERADO', 'COLEGIO']) {
     for (let attempt = 0; attempt < 20; attempt++) {
-      try { tokens[role] = (await request('/auth/demo', '', 'POST', { role })).token; break; }
+      try { tokens[role] = (await request('/auth/login', '', 'POST', { email: ({ ADMIN: 'admin', FURGONISTA: 'carlos', APODERADO: 'maria', COLEGIO: 'sanmarcos' })[role] + '@furgonapp.demo', password: 'FurgonDemo2026!' })).token; break; }
       catch (e) { if (attempt === 19) throw e; await new Promise(resolve => setTimeout(resolve, 300)); }
     }
   }

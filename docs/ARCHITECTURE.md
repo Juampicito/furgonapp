@@ -42,16 +42,16 @@ La edición de capacidad toma los bloqueos de perfil y vehículo en el mismo ord
 ## Seguridad
 
 - JWT HS256 firmados con Nimbus y validados por Spring Security (firma, emisor, caducidad).
-- Clave requerida de al menos 32 caracteres fuera del perfil demo.
+- Clave requerida de al menos 32 caracteres; el arranque local genera un secreto aleatorio privado.
 - Contraseñas con BCrypt; el JWT dura ocho horas y la sesión de la interfaz vive en `sessionStorage`.
 - Restricciones por rol y comprobación de propietario en servicios. La cuenta activa se consulta nuevamente, incluso si ya existe un JWT.
-- Acceso rápido y seed condicionados por `app.demo`; deshabilitados por defecto.
+- Acceso rápido eliminado; registro público para tres roles, ADMIN solo mediante aprovisionamiento privado.
 - Archivos documentales en la base de datos, descarga autenticada y `Cache-Control: no-store`. Archivos de hasta 5 MB, PDF/PNG/JPEG; fotografías y logos públicos separados en `MediaAsset`.
 - Cambiar identidad, vehículo, foto o documentos invalida la aprobación del perfil.
 - El colegio puede consultar transportistas asociados, sin acceder a contratos ni cotizaciones de las familias.
-- La demo usa datos ficticios, fotografías ilustradas y documentos explícitamente demostrativos.
+- Los datos ficticios se cargan exclusivamente bajo el perfil test. La instalación local crea cuatro cuentas sin contratos ni documentos ficticios.
 
-Para producción quedan fuera de esta entrega: registro público y recuperación de contraseña, rotación/revocación de tokens, MFA administrativo, limitación de intentos, auditoría detallada de revisiones, almacenamiento externo y análisis de archivos, paginación, observabilidad y despliegue endurecido. El inicio de sesión por contraseña sí tiene endpoint; la interfaz se centra en los accesos demo solicitados.
+Pendientes para un despliegue público: verificación de correo, recuperación/cambio de contraseña, revocación/rotación de tokens, MFA administrativo, auditoría detallada, almacenamiento externo y análisis de archivos, paginación, observabilidad y HTTPS. El registro público y login tienen interfaz y API funcionales; existe un límite de intentos por proceso que debe reemplazarse por uno compartido al escalar.
 
 ## Servicios sustituibles
 
@@ -67,6 +67,6 @@ Una misma pantalla institucional usa `--institution-primary`, `--institution-sec
 
 ## Persistencia y evolución
 
-PostgreSQL es la base objetivo. Flyway aplica `V1__initial_schema.sql`; Hibernate valida el esquema y no lo recrea. H2 en modo PostgreSQL permite una demo local persistente sin Docker; no pretende sustituir las pruebas finales en PostgreSQL. El seed se ejecuta solo sobre una base vacía y no reinicia los datos al arrancar.
+PostgreSQL es la base objetivo. Flyway aplica las migraciones V1 y V2 (normalización y restricción de correo); Hibernate valida el esquema y no lo recrea. H2 en modo PostgreSQL permite una instalación local persistente sin Docker; no pretende sustituir las pruebas finales en PostgreSQL. Las cuentas iniciales se crean solo sobre una base vacía y no se reinician al arrancar. La base local de cuentas está separada de la antigua demo.
 
 Las consultas agregadas actuales privilegian claridad y el tamaño pequeño de la demo. Para grandes volúmenes se requieren paginación, proyecciones SQL de búsqueda y agregaciones de contratos para evitar consultas por cada card.

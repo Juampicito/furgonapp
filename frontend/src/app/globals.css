@@ -2776,3 +2776,65 @@ textarea {
     width: 100%;
   }
 }
+
+.auth-tabs {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 28px;
+  padding: 5px;
+  background: #eef3ef;
+  border-radius: 12px;
+}
+.auth-tabs button {
+  flex: 1;
+  padding: 12px;
+  border: 0;
+  border-radius: 9px;
+  background: transparent;
+  font: inherit;
+  cursor: pointer;
+}
+.auth-tabs button[aria-pressed='true'] {
+  background: white;
+  color: #17573b;
+  box-shadow: 0 2px 8px #173c2810;
+  font-weight: 700;
+}
+.auth-form {
+  display: grid;
+  gap: 16px;
+  margin-top: 26px;
+}
+.auth-names {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+.auth-password {
+  position: relative;
+}
+.auth-password input {
+  padding-right: 50px;
+}
+.auth-password > button {
+  position: absolute;
+  right: 8px;
+  bottom: 6px;
+}
+.auth-form > .button {
+  width: 100%;
+  justify-content: center;
+  min-height: 48px;
+}
+.auth-header-note {
+  font-size: 13px;
+  color: var(--muted);
+}
+@media (max-width: 480px) {
+  .auth-names {
+    grid-template-columns: 1fr;
+  }
+  .auth-header-note {
+    display: none;
+  }
+}

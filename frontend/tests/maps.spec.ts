@@ -1,10 +1,13 @@
 import { test, expect, type Page } from '@playwright/test';
 import { mockMaps } from './maps-mock';
+import { fixtureLogin, isolateApi } from './auth-helpers';
+test.beforeEach(async ({ page }) => isolateApi(page));
 import { communeFromComponents } from '../src/lib/google-maps';
 
 async function openSchool(page: Page) {
-  await page.goto('/');
-  await page.getByRole('button', { name: 'Entrar como Apoderado', exact: true }).click();
+  await fixtureLogin(page, 'Apoderado');
+  const school = page.locator('.school-result').filter({ hasText: 'Colegio San Marcos' });
+  if (await school.count()) await school.getByRole('button', { name: 'Guardar institución' }).click();
   await page
     .locator('.institution-card')
     .filter({ hasText: 'Colegio San Marcos' })

@@ -1,68 +1,29 @@
 'use client';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import {
-  ArrowRight,
   BusFront,
   GraduationCap,
   HeartHandshake,
   ShieldCheck,
-  MapPin,
-  Check,
-  LoaderCircle,
+  ArrowRight,
+  Eye,
+  EyeOff,
 } from 'lucide-react';
-import { api, login } from '@/lib/api';
+import { login, register } from '@/lib/api';
+import { Button, Field } from '@/components/ui';
 import type { Role } from '@/lib/types';
-const roles = [
-  {
-    role: 'APODERADO' as Role,
-    title: 'Soy apoderado',
-    description: 'Un viaje seguro para quienes más quieres.',
-    icon: HeartHandshake,
-    label: 'Entrar como Apoderado',
-  },
-  {
-    role: 'FURGONISTA' as Role,
-    title: 'Soy furgonista',
-    description: 'Tu servicio, tus rutas y tus familias, en un lugar.',
-    icon: BusFront,
-    label: 'Entrar como Furgonista',
-  },
-  {
-    role: 'COLEGIO' as Role,
-    title: 'Soy un colegio',
-    description: 'Conecta tu comunidad con un mejor transporte.',
-    icon: GraduationCap,
-    label: 'Entrar como Colegio',
-  },
-  {
-    role: 'ADMIN' as Role,
-    title: 'Administración',
-    description: 'Acompaña y supervisa toda la plataforma.',
-    icon: ShieldCheck,
-    label: 'Entrar como Administrador',
-  },
-];
+
 export default function Home() {
-  const [busy, setBusy] = useState<Role | null>(null);
+  const [mode, setMode] = useState<'login' | 'register'>('login');
+  const [role, setRole] = useState<Exclude<Role, 'ADMIN'>>('APODERADO');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [confirmation, setConfirmation] = useState('');
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
+  const [visible, setVisible] = useState(false);
+  const [busy, setBusy] = useState(false);
   const [error, setError] = useState('');
-  const [demo, setDemo] = useState<boolean | null>(null);
-  useEffect(() => {
-    api<{ demo: boolean }>('/auth/config')
-      .then((r) => setDemo(r.demo))
-      .catch(() =>
-        setError('No se pudo conectar con el backend. Inícialo y vuelve a cargar esta página.'),
-      );
-  }, []);
-  const enter = async (role: Role) => {
-    setBusy(role);
-    setError('');
-    try {
-      window.location.href = `/${await login(role)}`;
-    } catch (e) {
-      setError(e instanceof Error ? e.message : 'No se pudo ingresar');
-      setBusy(null);
-    }
-  };
   return (
     <main className="welcome">
       <header className="welcome-nav">
@@ -73,9 +34,7 @@ export default function Home() {
           Furgon<span>App</span>
           <i />
         </a>
-        <span className="demo-pill">
-          <span /> Entorno de demostración
-        </span>
+        <span className="auth-header-note">Tu comunidad, más cerca</span>
       </header>
       <div className="welcome-body">
         <section className="welcome-intro">
@@ -102,77 +61,180 @@ export default function Home() {
               <BusFront size={82} strokeWidth={1.3} />
               <span>FurgonApp</span>
             </div>
-            <div className="floating-proof">
-              <span>
-                <Check size={18} />
-              </span>
-              Conectados en cada trayecto
-            </div>
-            <span className="map-dot dot-one" />
-            <span className="map-dot dot-two" />
           </div>
           <div className="welcome-benefits">
             <span>
-              <ShieldCheck size={17} /> Perfiles revisados
+              <ShieldCheck size={17} /> Tu cuenta personal
             </span>
             <span>
-              <MapPin size={17} /> Tu comunidad, más cerca
+              <HeartHandshake size={17} /> Tu comunidad escolar
             </span>
           </div>
         </section>
-        <section className="access">
+        <section className="access auth-access">
+          <div className="auth-tabs" aria-label="Acceso a la plataforma">
+            <button
+              type="button"
+              aria-pressed={mode === 'login'}
+              onClick={() => {
+                setMode('login');
+                setError('');
+                setPassword('');
+              }}
+            >
+              Iniciar sesión
+            </button>
+            <button
+              type="button"
+              aria-pressed={mode === 'register'}
+              onClick={() => {
+                setMode('register');
+                setError('');
+                setPassword('');
+                setConfirmation('');
+              }}
+            >
+              Crear cuenta
+            </button>
+          </div>
           <span className="eyebrow">TU ESPACIO EN FURGONAPP</span>
-          <h2>¿Cómo quieres ingresar?</h2>
-          <p>Elige un perfil y explora la experiencia.</p>
-          <div className="access-roles">
-            {roles.map(({ role, title, description, icon: Icon, label }) => (
+          <h2>{mode === 'login' ? 'Qué bueno verte de nuevo' : 'Empieza a conectar'}</h2>
+          <p>
+            {mode === 'login'
+              ? 'Ingresa con tu correo y contraseña.'
+              : 'Crea tu cuenta y completa tu perfil para comenzar.'}
+          </p>
+          <form
+            className="auth-form"
+            onSubmit={async (e) => {
+              e.preventDefault();
+              setError('');
+              if (mode === 'register' && password !== confirmation) {
+                setError('Las contraseñas no coinciden.');
+                return;
+              }
+              setBusy(true);
+              try {
+                const destination =
+                  mode === 'login'
+                    ? await login(email, password)
+                    : await register({ email, password, firstName, lastName, role });
+                window.location.assign('/' + destination);
+              } catch (error) {
+                setError(error instanceof Error ? error.message : 'No se pudo ingresar.');
+                setBusy(false);
+              }
+            }}
+          >
+            {mode === 'register' && (
+              <>
+                <Field label="Tipo de cuenta">
+                  <select
+                    value={role}
+                    onChange={(e) => setRole(e.target.value as Exclude<Role, 'ADMIN'>)}
+                  >
+                    <option value="APODERADO">Apoderado</option>
+                    <option value="FURGONISTA">Furgonista</option>
+                    <option value="COLEGIO">Colegio</option>
+                  </select>
+                </Field>
+                <div className="auth-names">
+                  <Field label="Nombre">
+                    <input
+                      required
+                      maxLength={100}
+                      autoComplete="given-name"
+                      value={firstName}
+                      onChange={(e) => setFirstName(e.target.value)}
+                    />
+                  </Field>
+                  <Field label="Apellido">
+                    <input
+                      required
+                      maxLength={100}
+                      autoComplete="family-name"
+                      value={lastName}
+                      onChange={(e) => setLastName(e.target.value)}
+                    />
+                  </Field>
+                </div>
+              </>
+            )}
+            <Field label="Correo electrónico">
+              <input
+                type="email"
+                required
+                maxLength={254}
+                autoComplete="username"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+              />
+            </Field>
+            <div className="auth-password">
+              <Field label="Contraseña">
+                <input
+                  type={visible ? 'text' : 'password'}
+                  required
+                  minLength={mode === 'register' ? 12 : undefined}
+                  maxLength={72}
+                  autoComplete={mode === 'register' ? 'new-password' : 'current-password'}
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                />
+              </Field>
               <button
-                key={role}
-                aria-label={label}
-                className="access-card"
-                disabled={!!busy || demo !== true}
-                onClick={() => enter(role)}
+                type="button"
+                className="icon-button"
+                aria-label={visible ? 'Ocultar contraseña' : 'Mostrar contraseña'}
+                onClick={() => setVisible(!visible)}
               >
-                <span className={`access-icon ${role.toLowerCase()}`}>
-                  <Icon size={25} />
-                </span>
-                <span>
-                  <strong>{title}</strong>
-                  <small>{description}</small>
-                </span>
-                {busy === role ? (
-                  <LoaderCircle className="spin" size={20} />
-                ) : (
-                  <ArrowRight size={20} />
-                )}
+                {visible ? <EyeOff size={19} /> : <Eye size={19} />}
               </button>
-            ))}
-          </div>
-          {error && (
-            <div role="alert" className="inline-error">
-              {error}
             </div>
-          )}
-          {demo === false && (
-            <div className="inline-error">
-              El acceso de desarrollo está deshabilitado. Inicia el backend con el perfil demo para
-              recorrer esta versión.
-            </div>
-          )}
-          <div className="demo-note">
-            <ShieldCheck size={18} />
-            <p>
-              <strong>Un espacio para explorar.</strong>
-              <br />
-              Accesos temporales con datos de prueba. Las verificaciones son simuladas y no se
-              realizan cobros.
-            </p>
-          </div>
+            {mode === 'register' && (
+              <>
+                <small className="muted">
+                  Usa al menos 12 caracteres. Puedes utilizar una frase larga.
+                </small>
+                <Field label="Confirmar contraseña">
+                  <input
+                    type={visible ? 'text' : 'password'}
+                    required
+                    minLength={12}
+                    maxLength={72}
+                    autoComplete="new-password"
+                    value={confirmation}
+                    onChange={(e) => setConfirmation(e.target.value)}
+                  />
+                </Field>
+                {role === 'FURGONISTA' && (
+                  <p className="soft-note">
+                    Antes de recibir solicitudes tendrás que completar tus datos, registrar tu
+                    vehículo y enviar tus documentos a revisión.
+                  </p>
+                )}
+                {role === 'COLEGIO' && (
+                  <p className="soft-note">
+                    Después de registrarte, completa los datos de tu institución en tu panel.
+                  </p>
+                )}
+              </>
+            )}
+            {error && (
+              <div role="alert" className="inline-error">
+                {error}
+              </div>
+            )}
+            <Button disabled={busy}>
+              {busy ? 'Un momento…' : mode === 'login' ? 'Ingresar' : 'Registrarme'}
+              <ArrowRight size={18} />
+            </Button>
+          </form>
         </section>
       </div>
       <footer className="welcome-footer">
         <span>Hecho para acompañar a tu comunidad.</span>
-        <span>FurgonApp · Primera edición</span>
+        <span>FurgonApp</span>
       </footer>
     </main>
   );

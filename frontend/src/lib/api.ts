@@ -19,7 +19,7 @@ export async function api<T = void>(path: string, method = 'GET', body?: unknown
   const response = await fetch(`/api${path}`, {
     method,
     headers: {
-      ...(token ? { Authorization: `Bearer ${token}` } : {}),
+      ...(token && !path.startsWith('/auth/') ? { Authorization: `Bearer ${token}` } : {}),
       ...(!isForm && body !== undefined ? { 'Content-Type': 'application/json' } : {}),
     },
     body: body === undefined ? undefined : isForm ? body : JSON.stringify(body),
@@ -39,8 +39,22 @@ export async function api<T = void>(path: string, method = 'GET', body?: unknown
   const text = await response.text();
   return text ? (JSON.parse(text) as T) : (undefined as T);
 }
-export async function login(role: Role) {
-  const data = await api<AuthResponse>('/auth/demo', 'POST', { role });
+export async function login(email: string, password: string) {
+  const data = await api<AuthResponse>('/auth/login', 'POST', { email: email.trim(), password });
+  sessionStorage.setItem('furgon-token', data.token);
+  return rolePaths[data.user.role];
+}
+export async function register(body: {
+  email: string;
+  password: string;
+  firstName: string;
+  lastName: string;
+  role: Exclude<Role, 'ADMIN'>;
+}) {
+  const data = await api<AuthResponse>('/auth/register', 'POST', {
+    ...body,
+    email: body.email.trim(),
+  });
   sessionStorage.setItem('furgon-token', data.token);
   return rolePaths[data.user.role];
 }

@@ -20,7 +20,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 @Component
-@ConditionalOnProperty(name = "app.demo", havingValue = "true")
+@org.springframework.context.annotation.Profile("test")
 public class DemoData implements CommandLineRunner {
 
   private final Repositories r;

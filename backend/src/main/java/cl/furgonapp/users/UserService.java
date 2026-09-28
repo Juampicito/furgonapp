@@ -38,7 +38,7 @@ public class UserService {
     u.lastName = b.lastName();
     u.rut = b.rut();
     u.phone = b.phone();
-    u.email = b.email().toLowerCase();
+    u.email = b.email().strip().toLowerCase(java.util.Locale.ROOT);
     u.address = b.address();
   }
 }

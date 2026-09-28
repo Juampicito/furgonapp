@@ -1,9 +1,10 @@
 import { test, expect, type Page } from '@playwright/test';
 import { mockMaps } from './maps-mock';
+import { fixtureLogin, isolateApi } from './auth-helpers';
+test.beforeEach(async ({ page }) => isolateApi(page));
 
 async function enter(page: Page, role: string) {
-  await page.goto('/');
-  await page.getByRole('button', { name: `Entrar como ${role}`, exact: true }).click();
+  await fixtureLogin(page, role);
   const routes: Record<string, string> = {
     Colegio: 'colegio',
     Apoderado: 'apoderado',
@@ -95,7 +96,7 @@ test('mobile navigation and four role pages have no horizontal overflow', async 
       .poll(() => page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth))
       .toBe(true);
     await page.getByRole('button', { name: 'Abrir menú' }).click();
-    await expect(page.getByRole('button', { name: 'Cambiar de perfil' })).toBeVisible();
+    await expect(page.getByRole('button', { name: 'Cerrar sesión' })).toBeVisible();
     await page.getByRole('button', { name: 'Cerrar menú', exact: true }).click({ position: { x: 370, y: 80 } });
   }
   await enter(page, 'Apoderado');

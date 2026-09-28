@@ -17,12 +17,12 @@ services:
   backend:
     build: ./backend
     environment:
-      SPRING_PROFILES_ACTIVE: demo
+      SPRING_PROFILES_ACTIVE: production
       SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/furgonapp
       SPRING_DATASOURCE_USERNAME: furgonapp
       SPRING_DATASOURCE_PASSWORD: ${DATABASE_PASSWORD:-furgonapp_dev}
       SERVER_ADDRESS: 0.0.0.0
-      APP_JWT_SECRET: ${JWT_SECRET:-development-only-secret-at-least-32-characters-furgonapp}
+      APP_JWT_SECRET: ${JWT_SECRET:?Configura JWT_SECRET con un secreto aleatorio}
       MAX_PRICE_DEVIATION_PERCENTAGE: ${MAX_PRICE_DEVIATION_PERCENTAGE:-25}
     ports:
       - "127.0.0.1:8080:8080"

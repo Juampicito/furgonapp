@@ -365,7 +365,7 @@ function InstitutionSpace({
               ))}
             </div>
             <p className="muted">
-              Validación manual simulada en esta demostración. Los documentos completos son
+              Documentos revisados manualmente por administración. Los documentos completos son
               privados.
             </p>
             <div className="soft-note">
