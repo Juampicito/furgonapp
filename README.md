@@ -16,11 +16,15 @@ Abre http://127.0.0.1:3000. El script descarga Maven si hace falta, compila, gen
 
 La base local persistente es backend/data/furgonapp-accounts.mv.db (H2). La base anterior de demostración se conserva sin utilizarla. PostgreSQL sigue siendo el motor configurado por defecto para despliegue; esta ejecución local no constituye una validación en PostgreSQL.
 
+## Presentación ante el profesor
+
+Ejecuta `.\start.ps1 -Presentation` para crear cuatro cuentas preparadas, un colegio y un furgonista aprobado con 16 cupos. Consulta las [credenciales, el guion y la explicación del sistema](docs/PRESENTACION.md). La carga es opcional, local y no borra cuentas ni reinicia el avance.
+
 ## Cuentas y registro
 
 El primer arranque sobre la base vacía crea exactamente cuatro cuentas: admin@furgonapp.local, apoderado@furgonapp.local, furgonista@furgonapp.local y colegio@furgonapp.local. Cada una tiene una contraseña aleatoria distinta, disponible exclusivamente en **.tools/CUENTAS-INICIALES.md**. Las contraseñas y el secreto JWT no se suben a Git. No se sobrescriben usuarios ni contraseñas al reiniciar. Respalda tanto los secretos locales como la base de datos.
 
-El registro público permite Apoderado, Furgonista y Colegio. Administrador no es un rol de registro público. No se cargan colegios, vehículos, documentos aprobados ni contratos ficticios. El colegio completa su institución y el furgonista su perfil, vehículo y documentos antes de solicitar revisión. El administrador revisa y habilita el perfil.
+El registro público permite Apoderado, Furgonista y Colegio. Administrador no es un rol de registro público. En el arranque normal no se cargan colegios, vehículos, documentos aprobados ni contratos ficticios; `-Presentation` habilita expresamente los datos ficticios descritos arriba. El colegio completa su institución y el furgonista su perfil, vehículo y documentos antes de solicitar revisión. El administrador revisa y habilita el perfil.
 
 Las contraseñas usan BCrypt. El correo se normaliza y es único también en la base de datos. El acceso anónimo o con sesión vencida vuelve al formulario de ingreso. Desactivar una cuenta bloquea tanto nuevos ingresos como operaciones con su token existente. La sesión se guarda por pestaña y expira en 8 horas; cerrar sesión borra el token de esa pestaña, sin revocar copias externas.
 
@@ -34,7 +38,7 @@ Copia .env.example a .env, configura una contraseña de base de datos y un JWT_S
 
 ## Pruebas
 
-- Backend: mvn clean verify dentro de backend (18 pruebas).
+- Backend: mvn clean verify dentro de backend (incluye prueba del flujo con las cuentas de presentación).
 - API HTTP: node scripts/test-api.mjs desde esta carpeta; usa una base en memoria en el puerto 8081.
 - Navegador: arranca el backend con el perfil test y puerto 8081, el frontend en 3000, y ejecuta npm run test:e2e dentro de frontend (12 pruebas). Las llamadas API de estas pruebas se redirigen a 8081 para no modificar la base del usuario. El perfil test es exclusivamente para pruebas y contiene fixtures conocidos.
 

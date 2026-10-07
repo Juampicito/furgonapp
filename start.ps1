@@ -1,4 +1,4 @@
-param([switch]$SkipBuild)
+param([switch]$SkipBuild, [switch]$Presentation)
 $ErrorActionPreference = 'Stop'
 $projectRoot = $PSScriptRoot
 $toolsDir = Join-Path $projectRoot '.tools'
@@ -35,7 +35,12 @@ if (-not $SkipBuild) {
 & node (Join-Path $projectRoot 'scripts/init-local.mjs')
 if ($LASTEXITCODE -ne 0) { throw 'No se pudo preparar la configuración local.' }
 Copy-Item -LiteralPath (Join-Path $projectRoot 'backend/target/furgonapp-0.1.0.jar') -Destination (Join-Path $toolsDir 'furgonapp-running.jar') -Force
-$javaProcess = Start-Process -FilePath (Get-Command java).Source -ArgumentList '-jar','../.tools/furgonapp-running.jar','--spring.profiles.active=local','--spring.config.additional-location=file:../.tools/local.properties' -WorkingDirectory (Join-Path $projectRoot 'backend') -WindowStyle Hidden -RedirectStandardOutput (Join-Path $logsDir 'backend.log') -RedirectStandardError (Join-Path $logsDir 'backend-error.log') -PassThru
+$backendArgs = @('-jar','../.tools/furgonapp-running.jar','--spring.profiles.active=local','--spring.config.additional-location=file:../.tools/local.properties')
+if ($Presentation) {
+    $backendArgs += '--app.presentation.enabled=true','--app.bootstrap.enabled=false'
+    Write-Host 'Cuentas de presentación: consulta docs/PRESENTACION.md. Son exclusivamente para pruebas locales.'
+}
+$javaProcess = Start-Process -FilePath (Get-Command java).Source -ArgumentList $backendArgs -WorkingDirectory (Join-Path $projectRoot 'backend') -WindowStyle Hidden -RedirectStandardOutput (Join-Path $logsDir 'backend.log') -RedirectStandardError (Join-Path $logsDir 'backend-error.log') -PassThru
 $nodeProcess = Start-Process -FilePath (Get-Command node).Source -ArgumentList 'node_modules/next/dist/bin/next','start','--hostname','127.0.0.1' -WorkingDirectory (Join-Path $projectRoot 'frontend') -WindowStyle Hidden -RedirectStandardOutput (Join-Path $logsDir 'frontend.log') -RedirectStandardError (Join-Path $logsDir 'frontend-error.log') -PassThru
 @{ backend = $javaProcess.Id; frontend = $nodeProcess.Id } | ConvertTo-Json | Set-Content -LiteralPath (Join-Path $toolsDir 'processes.json')
 Write-Host 'FurgonApp iniciándose en http://127.0.0.1:3000'

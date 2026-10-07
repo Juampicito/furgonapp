@@ -49,7 +49,7 @@ La edición de capacidad toma los bloqueos de perfil y vehículo en el mismo ord
 - Archivos documentales en la base de datos, descarga autenticada y `Cache-Control: no-store`. Archivos de hasta 5 MB, PDF/PNG/JPEG; fotografías y logos públicos separados en `MediaAsset`.
 - Cambiar identidad, vehículo, foto o documentos invalida la aprobación del perfil.
 - El colegio puede consultar transportistas asociados, sin acceder a contratos ni cotizaciones de las familias.
-- Los datos ficticios se cargan exclusivamente bajo el perfil test. La instalación local crea cuatro cuentas sin contratos ni documentos ficticios.
+- El perfil test carga fixtures aislados. El arranque local normal crea cuatro cuentas sin datos ficticios; la opción explícita `-Presentation` habilita `PresentationData` solo en el perfil local, con cuatro cuentas adicionales y un escenario preparado que conserva su avance.
 
 Pendientes para un despliegue público: verificación de correo, recuperación/cambio de contraseña, revocación/rotación de tokens, MFA administrativo, auditoría detallada, almacenamiento externo y análisis de archivos, paginación, observabilidad y HTTPS. El registro público y login tienen interfaz y API funcionales; existe un límite de intentos por proceso que debe reemplazarse por uno compartido al escalar.
 
