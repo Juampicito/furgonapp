@@ -1,6 +1,14 @@
 # FurgonApp
 
+## Portafolio académico
+
+La documentación CAPSTONE se organiza en [fases, evidencias y control de entregables](CAPSTONE/README.md). Incluye las tres fases, documentos Word, presentaciones y evidencias técnicas. Los pendientes de plantillas y revisión personal están identificados; no es una entrega académica validada.
+
 Plataforma de transporte escolar con Next.js/React/TypeScript, Spring Boot 3/Java 17 y PostgreSQL. Incluye registro e inicio de sesión con contraseña, permisos por rol, perfiles de furgonistas, revisión de documentos, instituciones, búsqueda con Google Maps, cotizaciones y reserva atómica de cupos.
+
+## Equipo y proceso
+
+Juan Pablo Fuentes Valenzuela: principalmente desarrollo informático. Sebastian Mendez: documentación y preparación del despliegue. Desarrollo iterativo e incremental: definición, implementación, verificación y ajuste de cada funcionalidad. [Arquitectura académica](CAPSTONE/Fase%202/Evidencias%20Proyecto/Documentacion/DISENO.md).
 
 ## Iniciar en Windows
 
