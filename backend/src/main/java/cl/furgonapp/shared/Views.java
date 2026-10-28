@@ -96,6 +96,7 @@ public final class Views {
     VehicleView vehicle,
     List<String> communes,
     List<UUID> institutionIds,
-    List<DocumentType> verifiedDocuments
+    List<DocumentType> verifiedDocuments,
+    List<cl.furgonapp.coverage.GeoPoint> territory
   ) {}
 }

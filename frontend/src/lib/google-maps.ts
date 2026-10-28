@@ -31,6 +31,7 @@ export function loadGoogleMaps(key: string): Promise<void> {
 export type PickupLocation = {
   address: string;
   commune: string;
+  region?: string;
   placeId: string;
   lat: number;
   lng: number;

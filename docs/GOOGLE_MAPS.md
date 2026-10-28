@@ -26,6 +26,14 @@ Con Docker, configura `GOOGLE_MAPS_BROWSER_KEY` en el `.env` raíz y recrea el s
 
 ## Comprobar
 
+### Dirección del colegio y mapa de instituciones
+
+En Colegio → Mi institución, selecciona la dirección del establecimiento en el autocompletado de Google. El formulario guarda dirección, comuna, región, Place ID, latitud y longitud. Escribir texto sin seleccionar una sugerencia no permite guardar; modificar la búsqueda invalida la selección anterior. Al volver al panel, el mapa muestra la ubicación guardada.
+
+Apoderado → Mis instituciones y Furgonista → Área de cobertura comparten un mapa de los colegios inscritos con ubicación confirmada. La búsqueda por nombre ignora mayúsculas y acentos, enfoca las coincidencias y conserva los demás marcadores atenuados. Pasar el mouse o enfocar un marcador muestra nombre y dirección; tocarlo abre la selección. Los apoderados pueden guardar un colegio o entrar a uno guardado. Los furgonistas pueden seleccionar varios colegios y guardar su cobertura.
+
+La migración V3 conserva las instituciones antiguas sin inventar coordenadas. Estas siguen disponibles en la lista con un aviso hasta que su propietario confirme la dirección en Google. La ubicación es declarada por el colegio: el backend exige datos completos y rangos válidos, pero no certifica que el establecimiento exista ni consulta Google para verificar su representación.
+
 Entra como Apoderado → Entrar al colegio → escribe calle, número y comuna → selecciona una sugerencia. Comprueba el marcador y la comuna, y pulsa Buscar furgonistas. Al editar de nuevo la dirección se invalida la selección y se borran los resultados anteriores. Si no hay clave o falla Google, la búsqueda queda deshabilitada y muestra el motivo.
 
 La integración no solicita la ubicación del dispositivo. El mapa utiliza `DEMO_MAP_ID` para el marcador avanzado; se puede sustituir por un Map ID propio para personalizar el estilo.

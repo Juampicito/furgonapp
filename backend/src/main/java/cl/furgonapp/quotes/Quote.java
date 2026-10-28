@@ -23,6 +23,9 @@ public class Quote extends BaseEntity {
   @Column(nullable = false)
   public String commune;
 
+  public Double pickupLatitude;
+  public Double pickupLongitude;
+
   @Column(nullable = false, precision = 12, scale = 0)
   public java.math.BigDecimal suggestedPrice;
 

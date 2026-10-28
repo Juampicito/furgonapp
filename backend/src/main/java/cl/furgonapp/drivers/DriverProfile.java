@@ -21,4 +21,9 @@ public class DriverProfile extends BaseEntity {
   public String bio;
 
   public String rejectionReason;
+
+  @ElementCollection
+  @CollectionTable(name = "driver_territory_point", joinColumns = @JoinColumn(name = "driver_id"))
+  @OrderColumn(name = "point_order")
+  public java.util.List<cl.furgonapp.coverage.GeoPoint> territory = new java.util.ArrayList<>();
 }

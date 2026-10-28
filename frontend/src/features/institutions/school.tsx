@@ -6,9 +6,16 @@ import { contrastText } from '@/lib/format';
 import type { Institution } from '@/lib/types';
 import { useWorkspace } from '@/components/workspace';
 import { Button, Field, Stat, DriverCard } from '@/components/ui';
+import { PickupMap } from '@/components/pickup-map';
+import { hasInstitutionLocation } from '@/components/institution-map';
+import type { PickupLocation } from '@/lib/google-maps';
 export function SchoolPanel() {
   const { data, run, busy } = useWorkspace();
   const institution = data.institutions.find((i) => i.ownerId === data.user.id);
+  const [location, setLocation] = useState<PickupLocation | null>(institution && hasInstitutionLocation(institution) ? {
+    address: institution.address, commune: institution.commune, region: institution.region,
+    placeId: institution.placeId!, lat: institution.latitude!, lng: institution.longitude!,
+  } : null);
   const [form, setForm] = useState<Omit<Institution, 'id' | 'ownerId'>>(
     institution ?? {
       name: '',
@@ -70,12 +77,14 @@ export function SchoolPanel() {
           className="panel form-panel"
           onSubmit={async (e) => {
             e.preventDefault();
+            if (!location) return;
             await run(
               () =>
                 api(
                   institution ? `/institutions/${institution.id}` : '/institutions',
                   institution ? 'PUT' : 'POST',
-                  form,
+                  { ...form, address: location.address, commune: location.commune, region: location.region || form.region,
+                    placeId: location.placeId, latitude: location.lat, longitude: location.lng },
                 ),
               'Institución y tema guardados',
             );
@@ -88,12 +97,11 @@ export function SchoolPanel() {
           <div className="form-grid">
             {field('name', 'Nombre del establecimiento')}
             {field('rbd', 'RBD (opcional)')}
-            {field('address', 'Dirección')}
-            {field('region', 'Región')}
-            {field('commune', 'Comuna')}
             {field('phone', 'Teléfono')}
             {field('email', 'Correo electrónico')}
           </div>
+          <PickupMap label="Dirección del establecimiento" initialLocation={location} onChange={setLocation} />
+          {!location && <p className="soft-note">Selecciona una dirección de Google Maps para guardar el colegio y mostrarlo en el mapa de instituciones.</p>}
           <Field label="Descripción">
             <textarea
               rows={3}
@@ -141,7 +149,7 @@ export function SchoolPanel() {
             />
           </Field>
           <div className="form-footer">
-            <Button type="submit" disabled={busy}>
+            <Button type="submit" disabled={busy || !location}>
               Guardar institución
             </Button>
           </div>

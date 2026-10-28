@@ -31,9 +31,12 @@ public final class Requests {
 
   public record CoverageUpdate(
     @NotBlank String region,
-    @NotEmpty @Size(max = 50) List<@NotBlank @Size(max = 100) String> communes,
-    @NotEmpty Set<UUID> institutionIds
+    @Size(max = 50) List<@NotBlank @Size(max = 100) String> communes,
+    @NotEmpty Set<UUID> institutionIds,
+    @NotNull @Size(min = 3, max = 100) List<@jakarta.validation.Valid @NotNull TerritoryPoint> territory
   ) {}
+
+  public record TerritoryPoint(@NotNull @DecimalMin("-90") @DecimalMax("90") Double latitude, @NotNull @DecimalMin("-180") @DecimalMax("180") Double longitude) {}
 
   public record InstitutionUpdate(
     @NotBlank @Size(max = 150) String name,
@@ -41,6 +44,9 @@ public final class Requests {
     @NotBlank String address,
     @NotBlank String region,
     @NotBlank String commune,
+    @NotBlank @Size(max = 255) String placeId,
+    @NotNull @DecimalMin("-90") @DecimalMax("90") Double latitude,
+    @NotNull @DecimalMin("-180") @DecimalMax("180") Double longitude,
     @NotBlank String phone,
     @Email @NotBlank String email,
     @Size(max = 2000) String description,
@@ -53,7 +59,9 @@ public final class Requests {
     @NotNull UUID driverId,
     @NotNull UUID institutionId,
     @NotBlank @Size(max = 255) String address,
-    @NotBlank @Size(max = 100) String commune
+    @NotBlank @Size(max = 100) String commune,
+    @DecimalMin("-90") @DecimalMax("90") Double latitude,
+    @DecimalMin("-180") @DecimalMax("180") Double longitude
   ) {}
 
   public record Offer(

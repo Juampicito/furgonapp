@@ -54,9 +54,11 @@ public class DriverController {
   @PreAuthorize("hasAnyRole('APODERADO','ADMIN')")
   public List<Views.DriverView> search(
     @RequestParam UUID institutionId,
-    @RequestParam String commune
+    @RequestParam String commune,
+    @RequestParam(required = false) Double latitude,
+    @RequestParam(required = false) Double longitude
   ) {
-    return drivers.search(institutionId, commune);
+    return drivers.search(institutionId, commune, latitude, longitude);
   }
 
   @GetMapping("/drivers/{id}")

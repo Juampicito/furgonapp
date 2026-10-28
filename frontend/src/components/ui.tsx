@@ -126,7 +126,7 @@ export function DriverCard({
       </div>
       <div className="driver-info">
         <Badge status={driver.status} />
-        <p>{driver.communes.join(' · ')}</p>
+        <p>{driver.territory?.length ? 'Zona de trabajo delimitada en el mapa' : driver.communes.join(' · ')}</p>
         {driver.vehicle && <Capacity vehicle={driver.vehicle} />}
         {suggestedPrice !== undefined && (
           <div className="card-price">

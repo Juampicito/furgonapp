@@ -13,7 +13,7 @@ Prefijo: `/api`. Autenticación: `Authorization: Bearer <JWT>`. Los cuerpos JSON
 | `GET /drivers/{id}` | Autenticado | Perfil público aprobado; dueño y ADMIN pueden consultar otros estados |
 | `PUT /drivers/{id}` | Dueño FURGONISTA / ADMIN | Biografía y foto de perfil |
 | `PUT /drivers/{id}/vehicle` | Dueño / ADMIN | Patente, marca, modelo, año, color, capacidad y foto |
-| `PUT /drivers/{id}/coverage` | Dueño / ADMIN | Región, comunas e instituciones atendidas |
+| `PUT /drivers/{id}/coverage` | Dueño / ADMIN | Región, territorio dibujado e instituciones atendidas |
 | `POST /drivers/{id}/documents` | Dueño / ADMIN | Multipart `type` y `file`; reinicia revisión |
 | `POST /drivers/{id}/submit` | Dueño / ADMIN | Comprueba integridad y solicita verificación |
 | `GET /documents/{id}/content` | Dueño FURGONISTA / ADMIN | Descarga privada |
@@ -37,6 +37,8 @@ Prefijo: `/api`. Autenticación: `Authorization: Bearer <JWT>`. Los cuerpos JSON
 
 Las listas de instituciones, usuarios, documentos, cotizaciones, contratos y notificaciones se entregan mediante `/workspace`, con DTOs y alcance apropiado a cada rol. No hay un endpoint que permita crear contratos directamente ni cambiar libremente el estado de una cotización.
 
+Crear o actualizar una institución exige además `placeId`, `latitude` (−90 a 90) y `longitude` (−180 a 180), junto con dirección, región y comuna. La interfaz obtiene estos datos al seleccionar una dirección de Google Places. `/workspace` incluye la ubicación para mostrar el directorio en el mapa. Las instituciones anteriores a V3 pueden conservar ubicación nula hasta confirmarla; las nuevas escrituras la requieren.
+
 El acceso `/auth/demo` fue eliminado. Registro: contraseñas de 12 caracteres como mínimo y 72 bytes como máximo, correo normalizado y único; duplicados retornan 409 y ADMIN retorna 403. Login inválido o desactivado retorna 401. Límite local de 30 intentos fallidos de login o 15 intentos de registro por IP en 15 minutos (429). No se confía en cabeceras reenviadas del cliente; al desplegar detrás de un proxy, configurar límites compartidos en el ingreso. Las contraseñas se almacenan únicamente como BCrypt; los JWT duran 8 horas y cada operación comprueba que la cuenta siga activa.
 
 ## Solicitar cotización
@@ -57,8 +59,14 @@ La institución debe estar guardada por el apoderado. El backend establece fecha
 ```json
 {
   "region": "Región Metropolitana",
-  "communes": ["Macul", "Ñuñoa"],
-  "institutionIds": ["UUID_DEL_COLEGIO"]
+  "communes": [],
+  "institutionIds": ["UUID_DEL_COLEGIO"],
+  "territory": [
+    {"latitude": -33.51, "longitude": -70.62},
+    {"latitude": -33.51, "longitude": -70.58},
+    {"latitude": -33.47, "longitude": -70.58},
+    {"latitude": -33.47, "longitude": -70.62}
+  ]
 }
 ```
 
@@ -75,3 +83,5 @@ La relación explícita con instituciones evita que pertenecer a una comuna impl
 - `409`: oferta resuelta, capacidad agotada, reducción imposible de capacidad o conflicto de integridad.
 
 La aceptación no cobra dinero: devuelve el UUID del contrato y conserva la indicación de pago pendiente de implementación.
+
+El territorio admite entre 3 y 100 vértices, sin repetir el primer punto al final. Se rechazan bordes cruzados y áreas degeneradas. La búsqueda /search/drivers recibe latitude y longitude del punto de recogida, también enviados al crear una cotización. Se comprueba el punto dentro del polígono al buscar, cotizar y aceptar (el borde cuenta como cubierto). Los perfiles antiguos conservan temporalmente la cobertura por comuna hasta guardar su primer territorio; los perfiles con territorio nunca vuelven al filtro por comuna si faltan coordenadas.

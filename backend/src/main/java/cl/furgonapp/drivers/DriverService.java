@@ -89,14 +89,17 @@ public class DriverService {
   }
 
   public void coverage(UUID id, Requests.CoverageUpdate b) {
-    lockedOwned(id);
+    var profile = lockedOwned(id);
+    var territory = b.territory().stream().map(p -> new GeoPoint(p.latitude(), p.longitude())).toList();
+    Territory.validate(territory);
+    profile.territory.clear(); profile.territory.addAll(territory);
     for (var institutionId : b.institutionIds())
       if (
         !r.institutions().existsById(institutionId)
       ) throw ApiException.missing();
     r.coverage().deleteByDriverId(id);
     r.coverage().flush();
-    for (String commune : new LinkedHashSet<>(b.communes())) {
+    for (String commune : new LinkedHashSet<>(b.communes() == null ? List.<String>of() : b.communes())) {
       var a = new CoverageArea();
       a.driverId = id;
       a.region = b.region();
@@ -132,7 +135,7 @@ public class DriverService {
       u.phone.isBlank() ||
       d.photoId == null ||
       v.photoId == null ||
-      r.coverage().findByDriverId(d.id).isEmpty() ||
+      (d.territory.isEmpty() && r.coverage().findByDriverId(d.id).isEmpty()) ||
       r.driverInstitutions().findByDriverId(d.id).isEmpty() ||
       r.documents().findByDriverId(d.id).size() < DocumentType.values().length
     ) throw ApiException.bad(
@@ -179,11 +182,15 @@ public class DriverService {
         .stream()
         .filter(x -> x.status == DocumentStatus.APROBADO)
         .map(x -> x.type)
-        .toList()
+        .toList(),
+      List.copyOf(d.territory)
     );
   }
 
   public boolean matches(DriverProfile d, UUID institutionId, String commune) {
+    return matches(d, institutionId, commune, null, null);
+  }
+  public boolean matches(DriverProfile d, UUID institutionId, String commune, Double latitude, Double longitude) {
     if (
       d.status != ProfileStatus.APROBADO ||
       !r.users().findById(d.userId).orElseThrow().active
@@ -198,15 +205,16 @@ public class DriverService {
       r
         .driverInstitutions()
         .existsByDriverIdAndInstitutionId(d.id, institutionId) &&
-      r
+      (!d.territory.isEmpty() ? Territory.contains(d.territory, latitude, longitude) : r
         .coverage()
         .findByDriverId(d.id)
         .stream()
-        .anyMatch(a -> a.commune.equalsIgnoreCase(commune.trim()))
+        .anyMatch(a -> a.commune.equalsIgnoreCase(commune.trim())))
     );
   }
 
-  public List<Views.DriverView> search(UUID institutionId, String commune) {
+  public List<Views.DriverView> search(UUID institutionId, String commune, Double latitude, Double longitude) {
+    if ((latitude == null) != (longitude == null) || (latitude != null && (!Double.isFinite(latitude) || !Double.isFinite(longitude) || Math.abs(latitude)>90 || Math.abs(longitude)>180))) throw ApiException.bad("Punto de recogida inválido.");
     actor.get();
     if (
       !r.institutions().existsById(institutionId)
@@ -215,7 +223,7 @@ public class DriverService {
       .drivers()
       .findAll()
       .stream()
-      .filter(d -> matches(d, institutionId, commune))
+      .filter(d -> matches(d, institutionId, commune, latitude, longitude))
       .map(this::view)
       .toList();
   }

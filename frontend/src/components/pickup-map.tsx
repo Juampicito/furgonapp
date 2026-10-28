@@ -3,14 +3,19 @@ import { useEffect, useRef, useState } from 'react';
 import { MapPin } from 'lucide-react';
 import { communeFromComponents, loadGoogleMaps, type PickupLocation } from '@/lib/google-maps';
 
-export function PickupMap({ onChange }: { onChange: (location: PickupLocation | null) => void }) {
+export function PickupMap({ onChange, label = 'Dirección de recogida', initialLocation = null }: {
+  onChange: (location: PickupLocation | null) => void;
+  label?: string;
+  initialLocation?: PickupLocation | null;
+}) {
+  const initial = useRef(initialLocation);
   const inputHost = useRef<HTMLDivElement>(null);
   const mapHost = useRef<HTMLDivElement>(null);
   const change = useRef(onChange);
   change.current = onChange;
   const [status, setStatus] = useState('Cargando Google Maps…');
   const [ready, setReady] = useState(false);
-  const [location, setLocation] = useState<PickupLocation | null>(null);
+  const [location, setLocation] = useState<PickupLocation | null>(initialLocation);
   const [error, setError] = useState('');
 
   useEffect(() => {
@@ -50,17 +55,21 @@ export function PickupMap({ onChange }: { onChange: (location: PickupLocation | 
           ]);
         if (disposed || !mapHost.current || !inputHost.current) return;
         const map = new Map(mapHost.current, {
-          center: { lat: -33.4489, lng: -70.6693 },
-          zoom: 11,
+          center: initial.current ?? { lat: -33.4489, lng: -70.6693 },
+          zoom: initial.current ? 17 : 11,
           mapId: 'DEMO_MAP_ID',
           mapTypeControl: false,
           streetViewControl: false,
           gestureHandling: 'cooperative',
         });
-        marker = new AdvancedMarkerElement({ title: 'Punto de recogida' });
+        marker = new AdvancedMarkerElement({ title: label });
+        if (initial.current) {
+          marker.position = initial.current;
+          marker.map = map;
+        }
         widget = new PlaceAutocompleteElement({ includedRegionCodes: ['cl'] });
         widget.placeholder = 'Escribe calle, número y comuna';
-        widget.setAttribute('aria-label', 'Dirección de recogida');
+        widget.setAttribute('aria-label', label);
         widget.addEventListener('input', invalidate);
         widget.addEventListener('gmp-error', () => {
           invalidate();
@@ -85,6 +94,7 @@ export function PickupMap({ onChange }: { onChange: (location: PickupLocation | 
             const pickup = {
               address: place.formattedAddress,
               commune,
+              region: place.addressComponents?.find((part) => part.types.includes('administrative_area_level_1'))?.longText || undefined,
               placeId: place.id,
               ...place.location.toJSON(),
             };
@@ -104,7 +114,7 @@ export function PickupMap({ onChange }: { onChange: (location: PickupLocation | 
         });
         inputHost.current.replaceChildren(widget);
         setReady(true);
-        setStatus('Selecciona una sugerencia de Google para ubicar la recogida.');
+        setStatus(initial.current ? 'Ubicación guardada. Selecciona otra dirección para cambiarla.' : 'Selecciona una sugerencia de Google para confirmar la ubicación.');
       } catch (failure) {
         if (!disposed)
           setError(failure instanceof Error ? failure.message : 'No se pudo cargar Google Maps.');
@@ -123,11 +133,11 @@ export function PickupMap({ onChange }: { onChange: (location: PickupLocation | 
   return (
     <div className="pickup-search">
       <div className="field">
-        <span>Dirección de recogida</span>
+        <span>{label}</span>
         <div ref={inputHost} />
       </div>
       <div className="pickup-map" style={{ position: 'relative' }}>
-        <div ref={mapHost} aria-label="Mapa del punto de recogida" style={{ height: '100%', width: '100%' }} />
+        <div ref={mapHost} aria-label={`Mapa: ${label}`} style={{ height: '100%', width: '100%' }} />
         {!ready && (
           <div className="map-placeholder" style={{ position: 'absolute', inset: 0 }}>
             <MapPin size={36} />

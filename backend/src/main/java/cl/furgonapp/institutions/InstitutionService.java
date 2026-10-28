@@ -37,6 +37,11 @@ public class InstitutionService {
     i.address = b.address();
     i.region = b.region();
     i.commune = b.commune();
+    if (!Double.isFinite(b.latitude()) || !Double.isFinite(b.longitude()))
+      throw ApiException.bad("Selecciona una ubicación válida en Google Maps.");
+    i.placeId = b.placeId();
+    i.latitude = b.latitude();
+    i.longitude = b.longitude();
     i.phone = b.phone();
     i.email = b.email();
     i.description = b.description();

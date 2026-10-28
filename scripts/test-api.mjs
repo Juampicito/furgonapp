@@ -69,6 +69,7 @@ test('guardian saves multiple institutions and repeated save is idempotent', asy
   assert.equal((await request('/workspace', 'APODERADO')).savedInstitutionIds.length, 2);
 });
 test('school theme persists and school cannot see family contracts', async () => {
+  school = { ...school, placeId: 'test-institution-place', latitude: -33.49, longitude: -70.60 };
   await request(`/institutions/${school.id}`, 'COLEGIO', 'PUT', { ...school, primaryColor: '#178A45', secondaryColor: '#FFFFFF' });
   const w = await request('/workspace', 'COLEGIO');
   assert.equal(w.institutions.find(i => i.id === school.id).primaryColor, '#178A45');

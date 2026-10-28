@@ -89,7 +89,7 @@ export function AdminPanel({ section }: { section: string }) {
                   <tr key={d.id}>
                     <td>
                       <strong>{d.name}</strong>
-                      <small>{d.communes.join(' · ')}</small>
+                      <small>{d.territory?.length ? 'Zona delimitada en el mapa' : d.communes.join(' · ')}</small>
                     </td>
                     <td>
                       {d.vehicle?.brand} {d.vehicle?.model}

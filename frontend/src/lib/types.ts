@@ -40,7 +40,9 @@ export interface Driver {
   communes: string[];
   institutionIds: string[];
   verifiedDocuments: DocumentType[];
+  territory: TerritoryPoint[];
 }
+export interface TerritoryPoint { latitude: number; longitude: number; }
 export interface Institution {
   id: string;
   ownerId: string;
@@ -49,6 +51,9 @@ export interface Institution {
   address: string;
   region: string;
   commune: string;
+  placeId?: string | null;
+  latitude?: number | null;
+  longitude?: number | null;
   phone: string;
   email: string;
   description: string;

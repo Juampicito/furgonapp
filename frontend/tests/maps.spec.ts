@@ -7,7 +7,7 @@ import { communeFromComponents } from '../src/lib/google-maps';
 async function openSchool(page: Page) {
   await fixtureLogin(page, 'Apoderado');
   const school = page.locator('.school-result').filter({ hasText: 'Colegio San Marcos' });
-  if (await school.count()) await school.getByRole('button', { name: 'Guardar institución' }).click();
+  if (await school.getByRole('button', { name: 'Guardar institución' }).count()) await school.getByRole('button', { name: 'Guardar institución' }).click();
   await page
     .locator('.institution-card')
     .filter({ hasText: 'Colegio San Marcos' })

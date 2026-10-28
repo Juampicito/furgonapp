@@ -17,19 +17,14 @@ import { Button, Stat, Empty, Modal, DriverCard, Avatar, Capacity, Field } from 
 import { api } from '@/lib/api';
 import { contrastText, labels, money } from '@/lib/format';
 import { PickupMap } from '@/components/pickup-map';
+import { InstitutionMap } from '@/components/institution-map';
 import type { PickupLocation } from '@/lib/google-maps';
 import type { Driver, Institution } from '@/lib/types';
 export function GuardianPanel() {
   const { data, run, busy } = useWorkspace();
-  const [query, setQuery] = useState('');
   const [selected, setSelected] = useState<Institution | null>(null);
   const [remove, setRemove] = useState<Institution | null>(null);
   const saved = data.institutions.filter((i) => data.savedInstitutionIds?.includes(i.id));
-  const available = data.institutions.filter(
-    (i) =>
-      !data.savedInstitutionIds?.includes(i.id) &&
-      `${i.name} ${i.commune}`.toLocaleLowerCase().includes(query.toLocaleLowerCase()),
-  );
   if (selected)
     return (
       <InstitutionSpace
@@ -128,45 +123,12 @@ export function GuardianPanel() {
           <h3>Encuentra tu institución</h3>
           <p>Un mismo espacio para todos los colegios de tu familia.</p>
         </div>
-        <div className="search-input">
-          <Search size={19} />
-          <input
-            aria-label="Buscar institución"
-            placeholder="Busca por nombre del colegio o comuna…"
-            value={query}
-            onChange={(e) => setQuery(e.target.value)}
-          />
-        </div>
-        <div className="school-results">
-          {available.map((i) => (
-            <div className="school-result" key={i.id}>
-              <span className="small-icon">
-                <GraduationCap size={23} />
-              </span>
-              <div>
-                <h4>{i.name}</h4>
-                <small>
-                  {i.commune} · {i.region}
-                </small>
-              </div>
-              <Button
-                variant="secondary"
-                disabled={busy}
-                onClick={() =>
-                  run(
-                    () => api(`/guardians/me/institutions/${i.id}`, 'POST'),
-                    'Institución guardada',
-                  )
-                }
-              >
-                <Plus size={16} /> Guardar institución
-              </Button>
-            </div>
-          ))}
-          {!available.length && (
-            <p className="muted">No hay más instituciones que coincidan con tu búsqueda.</p>
-          )}
-        </div>
+        <InstitutionMap institutions={data.institutions} selectedIds={data.savedInstitutionIds ?? []}
+          busy={busy} actionLabel="Guardar institución" selectedActionLabel="Entrar al colegio"
+          onChoose={(institution) => {
+            if (data.savedInstitutionIds?.includes(institution.id)) setSelected(institution);
+            else void run(() => api(`/guardians/me/institutions/${institution.id}`, 'POST'), 'Institución guardada');
+          }} />
       </section>
       {remove && (
         <Modal title="¿Quitar institución?" onClose={() => setRemove(null)}>
@@ -212,7 +174,7 @@ function InstitutionSpace({
   const [results, setResults] = useState<Driver[] | null>(null);
   const [suggestedPrice, setSuggestedPrice] = useState<number | undefined>();
   const [selected, setSelected] = useState<Driver | null>(null);
-  const [searched, setSearched] = useState({ address: '', commune: '' });
+  const [searched, setSearched] = useState({ address: '', commune: '', latitude: 0, longitude: 0 });
   const theme = {
     '--institution-primary': institution.primaryColor,
     '--institution-secondary': institution.secondaryColor,
@@ -248,7 +210,7 @@ function InstitutionSpace({
           const { address, commune } = pickup;
           const version = pickupVersion.current;
           await run(async () => {
-            const query = `institutionId=${institution.id}&commune=${encodeURIComponent(commune)}`;
+            const query = `institutionId=${institution.id}&commune=${encodeURIComponent(commune)}&latitude=${pickup.lat}&longitude=${pickup.lng}`;
             const [found, estimate] = await Promise.all([
               api<Driver[]>(`/search/drivers?${query}`),
               api<{ suggestedPrice: number }>(`/pricing/estimate?${query}`),
@@ -256,7 +218,7 @@ function InstitutionSpace({
             if (version !== pickupVersion.current) return;
             setResults(found);
             setSuggestedPrice(estimate.suggestedPrice);
-            setSearched({ address, commune });
+            setSearched({ address, commune, latitude: pickup.lat, longitude: pickup.lng });
           }, 'Búsqueda actualizada');
         }}
       >
@@ -264,7 +226,7 @@ function InstitutionSpace({
           <h3>¿Desde dónde viajará el estudiante?</h3>
           <p>
             Busca tu dirección en Google Maps y revisa el punto de recogida. Buscaremos furgonistas
-            con cobertura en esa comuna.
+            que cubran ese punto de recogida.
           </p>
         </div>
         <PickupMap
@@ -290,7 +252,7 @@ function InstitutionSpace({
           <div className="section-title">
             <div>
               <h2>Furgonistas para tu familia</h2>
-              <p>Aprobados, con cupos y cobertura en {searched.commune}.</p>
+              <p>Aprobados, con cupos y cobertura en tu punto de recogida.</p>
             </div>
             <span className="count-pill">{results.length} disponibles</span>
           </div>
@@ -352,6 +314,7 @@ function InstitutionSpace({
             )}
             <h4>Trabaja en</h4>
             <div className="tags">
+              {selected.territory?.length > 0 && <span>Tu punto de recogida está dentro de su zona de trabajo</span>}
               {selected.communes.map((c) => (
                 <span key={c}>{c}</span>
               ))}
@@ -383,6 +346,7 @@ function InstitutionSpace({
                         institutionId: institution.id,
                         address: searched.address,
                         commune: searched.commune,
+                        latitude: searched.latitude, longitude: searched.longitude,
                       }),
                     'Cotización solicitada. Revisa el valor sugerido en Mis cotizaciones.',
                   )

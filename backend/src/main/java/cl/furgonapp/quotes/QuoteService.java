@@ -63,7 +63,7 @@ public class QuoteService {
       .orElseThrow(ApiException::missing);
     var commune = geo.commune(b.address(), b.commune());
     if (
-      !drivers.matches(d, b.institutionId(), commune)
+      !drivers.matches(d, b.institutionId(), commune, b.latitude(), b.longitude())
     ) throw ApiException.conflict(
       "El furgonista ya no está disponible para esta zona e institución."
     );
@@ -73,6 +73,7 @@ public class QuoteService {
     q.institutionId = b.institutionId();
     q.address = b.address();
     q.commune = commune;
+    q.pickupLatitude = b.latitude(); q.pickupLongitude = b.longitude();
     q.suggestedPrice = pricing.estimate(commune, b.institutionId());
     r.quotes().save(q);
     notifications.send(
@@ -137,7 +138,7 @@ public class QuoteService {
       .lockByDriverId(q.driverId)
       .orElseThrow(ApiException::missing);
     if (
-      !drivers.matches(d, q.institutionId, q.commune)
+      !drivers.matches(d, q.institutionId, q.commune, q.pickupLatitude, q.pickupLongitude)
     ) throw ApiException.conflict(
       "El furgonista ya no cumple las condiciones o no tiene cupos disponibles."
     );

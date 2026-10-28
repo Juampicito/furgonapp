@@ -16,8 +16,10 @@ import Link from 'next/link';
 import { api, uploadImage, downloadDocument } from '@/lib/api';
 import { useWorkspace } from '@/components/workspace';
 import { Stat, Badge, Button, Field, Capacity, Avatar } from '@/components/ui';
-import { communes, labels } from '@/lib/format';
+import { labels } from '@/lib/format';
 import type { DocumentType, Vehicle } from '@/lib/types';
+import { TerritoryMap } from '@/components/territory-map';
+import { InstitutionMap } from '@/components/institution-map';
 import { ProfileForm } from '@/features/profile/profile-form';
 import { QuotesPanel } from '@/features/quotes/quotes';
 const documentTypes: DocumentType[] = [
@@ -112,6 +114,7 @@ export function DriverOverview() {
           </span>
           <h3>Mi área de cobertura</h3>
           <p>Región Metropolitana</p>
+          {driver.territory?.length > 0 && <p>Zona delimitada en el mapa · {driver.territory.length} puntos</p>}
           <div className="tags">
             {driver.communes.map((c) => (
               <span key={c}>{c}</span>
@@ -394,7 +397,8 @@ export function Documents() {
 export function CoverageForm() {
   const { data, run, busy } = useWorkspace();
   const driver = data.drivers[0];
-  const [selected, setSelected] = useState(driver.communes);
+  const [territory, setTerritory] = useState(driver.territory || []);
+  const [territoryReady, setTerritoryReady] = useState(false);
   const [schools, setSchools] = useState(driver.institutionIds);
   const [region, setRegion] = useState('Región Metropolitana');
   return (
@@ -402,11 +406,13 @@ export function CoverageForm() {
       className="panel form-panel"
       onSubmit={async (e) => {
         e.preventDefault();
+        if (!territoryReady || !schools.length) return;
         await run(
           () =>
             api(`/drivers/${driver.id}/coverage`, 'PUT', {
               region,
-              communes: selected,
+              communes: [],
+              territory,
               institutionIds: schools,
             }),
           'Cobertura actualizada',
@@ -415,45 +421,21 @@ export function CoverageForm() {
     >
       <div className="panel-title">
         <h3>Área de cobertura</h3>
-        <p>Selecciona las comunas y los colegios que puedes atender.</p>
+        <p>Dibuja en azul el territorio donde recoges estudiantes y selecciona los colegios que atiendes.</p>
       </div>
       <Field label="Región">
         <input required value={region} onChange={(e) => setRegion(e.target.value)} />
       </Field>
-      <h4>Comunas de trabajo</h4>
-      <div className="checkbox-grid">
-        {communes.map((c) => (
-          <label className={selected.includes(c) ? 'checked' : ''} key={c}>
-            <input
-              type="checkbox"
-              checked={selected.includes(c)}
-              onChange={(e) =>
-                setSelected(e.target.checked ? [...selected, c] : selected.filter((x) => x !== c))
-              }
-            />
-            {c}
-          </label>
-        ))}
-      </div>
+      <h4>Zona de recogida</h4>
+      {!driver.territory?.length && <p className="muted">Tu cobertura anterior usa comunas. Dibuja y guarda tu zona para reemplazarla por un territorio preciso.</p>}
+      <TerritoryMap value={territory} onChange={setTerritory} onReady={setTerritoryReady} disabled={busy} />
       <h4>Instituciones atendidas</h4>
-      <div className="checkbox-grid">
-        {data.institutions.map((i) => (
-          <label key={i.id} className={schools.includes(i.id) ? 'checked' : ''}>
-            <input
-              type="checkbox"
-              checked={schools.includes(i.id)}
-              onChange={(e) =>
-                setSchools(
-                  e.target.checked ? [...schools, i.id] : schools.filter((x) => x !== i.id),
-                )
-              }
-            />
-            {i.name}
-          </label>
-        ))}
-      </div>
+      <InstitutionMap institutions={data.institutions} selectedIds={schools} busy={busy}
+        actionLabel="Seleccionar institución" selectedActionLabel="Quitar selección"
+        onChoose={(institution) => setSchools(current => current.includes(institution.id)
+          ? current.filter(id => id !== institution.id) : [...current, institution.id])} />
       <div className="form-footer">
-        <Button disabled={busy}>Guardar cobertura</Button>
+        <Button disabled={busy || !territoryReady || !schools.length}>Guardar cobertura</Button>
       </div>
     </form>
   );

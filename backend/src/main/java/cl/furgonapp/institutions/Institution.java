@@ -18,6 +18,9 @@ public class Institution extends BaseEntity {
   public String address;
   public String region;
   public String commune;
+  public String placeId;
+  public Double latitude;
+  public Double longitude;
   public String phone;
   public String email;
 

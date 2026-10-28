@@ -21,6 +21,7 @@ test('school identity → search → quote → offer → contract → admin', as
   await page.getByLabel('Nombre del establecimiento').fill('Colegio San Marcos');
   await page.getByLabel('Color principal').fill('#178a45');
   await page.getByLabel('Color secundario').fill('#ffffff');
+  await page.getByRole('button', { name: 'Seleccionar dirección de prueba' }).click();
   const logo = await page.evaluate(() => {
     const canvas = document.createElement('canvas'); canvas.width = canvas.height = 128;
     const context = canvas.getContext('2d')!;
@@ -29,13 +30,13 @@ test('school identity → search → quote → offer → contract → admin', as
     return canvas.toDataURL('image/png').split(',')[1];
   });
   await page.getByLabel('Logo institucional · PNG o JPEG').setInputFiles({ name: 'san-marcos.png', mimeType: 'image/png', buffer: Buffer.from(logo, 'base64') });
-  await expect(page.getByRole('status')).toContainText('Logo cargado');
+  await expect(page.locator('.toast')).toContainText('Logo cargado');
   await page.getByRole('button', { name: 'Guardar institución', exact: true }).click();
-  await expect(page.getByRole('status')).toContainText('Institución y tema guardados');
+  await expect(page.locator('.toast')).toContainText('Institución y tema guardados');
 
   await enter(page, 'Apoderado');
   const schoolResult = page.locator('.school-result').filter({ hasText: 'Colegio San Marcos' });
-  if (await schoolResult.count())
+  if (await schoolResult.getByRole('button', { name: 'Guardar institución' }).count())
     await schoolResult.getByRole('button', { name: 'Guardar institución' }).click();
   await page
     .locator('.institution-card')
@@ -111,6 +112,7 @@ test('wrong role URL redirects to the authenticated role', async ({ page }) => {
 });
 
 test('driver submits a document and admin reviews document and profile', async ({ page }) => {
+  await mockMaps(page);
   await enter(page, 'Furgonista');
   await page.getByRole('link', { name: 'Mi perfil y vehículo', exact: true }).click();
   await page.getByRole('button', { name: '2 Mi vehículo', exact: true }).click();
@@ -123,12 +125,14 @@ test('driver submits a document and admin reviews document and profile', async (
   });
   await expect(page.getByRole('status')).toContainText('Documento recibido');
   await page.getByRole('button', { name: '4 Área de cobertura', exact: true }).click();
-  await page.getByLabel('Macul', { exact: true }).check();
-  await page.getByLabel('Ñuñoa', { exact: true }).check();
+  const clearZone = page.getByRole('button', { name: 'Borrar zona y dibujar otra' });
+  if (await clearZone.isEnabled()) await clearZone.click();
+  for (let i = 1; i <= 4; i++) await page.getByRole('button', { name: `Punto de zona ${i}`, exact: true }).click();
+  await page.getByRole('button', { name: 'Terminar dibujo' }).click();
   await page.getByRole('button', { name: 'Guardar cobertura' }).click();
-  await expect(page.getByRole('status')).toContainText('Cobertura actualizada');
+  await expect(page.locator('.toast')).toContainText('Cobertura actualizada');
   await page.getByRole('button', { name: 'Solicitar revisión' }).click();
-  await expect(page.getByRole('status')).toContainText('Perfil enviado a revisión');
+  await expect(page.locator('.toast')).toContainText('Perfil enviado a revisión');
 
   await enter(page, 'Administrador');
   await page.getByRole('link', { name: 'Documentación', exact: true }).click();
