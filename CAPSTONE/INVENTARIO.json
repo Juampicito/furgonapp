@@ -1,8 +1,8 @@
 [
   {
     "archivo": "CONTROL-ENTREGABLES.md",
-    "bytes": 3201,
-    "sha256": "be23f8e787334bf6d9e94b9aeb116789e5f7b4aedb2a8908bac5c999f9fed6f0"
+    "bytes": 3620,
+    "sha256": "dc19b70f551aaec954e075451701b465a02cb724802c573f4bfab0edfaaa40a3"
   },
   {
     "archivo": "Fase 1/Evidencias Grupales/1.4_APT122_FormativaFase1.docx",
@@ -15,49 +15,44 @@
     "sha256": "de05c15335bf25f730f025922dc01b00bb120961fc8aa4f1f8984a8d07d02968"
   },
   {
-    "archivo": "Fase 1/Evidencias Grupales/Presentación Proyecto.pptx",
-    "bytes": 153814,
-    "sha256": "fd019c564fe9e7da33fcbbefdbe715111ff430cfc030bac0e622544debce991f"
-  },
-  {
     "archivo": "Fase 1/Evidencias Grupales/README.md",
-    "bytes": 745,
-    "sha256": "4fc80e8a9e837ed76ea1efd9d0261f2a801656007bca2f3c37cb878a56c2e1b3"
+    "bytes": 536,
+    "sha256": "2089f5dbc65732ff9be18dbf4c5c699418a20907a95b2fcac48ef5869c60a518"
   },
   {
     "archivo": "Fase 1/Evidencias Individuales/Fuentes_Valenzuela_Juan_Pablo_1.1_APT122_AutoevaluacionCompetenciasFase1.docx",
-    "bytes": 37697,
-    "sha256": "999f68694ed18984a1f49b1ab8fbf4db501de352e8f2844f908c117c473d04db"
+    "bytes": 890290,
+    "sha256": "d1534b243a2daefa48a99faf6367d9250690027c2f3fd09dd35401844e2bfabb"
   },
   {
     "archivo": "Fase 1/Evidencias Individuales/Fuentes_Valenzuela_Juan_Pablo_1.2_APT122_DiarioReflexionFase1.docx",
-    "bytes": 37442,
-    "sha256": "b4c6c7a901e5fe220dd873a3ec88937a72926a08602f38293f5c07f6cdf9803f"
+    "bytes": 1290417,
+    "sha256": "64260858beeccf10fe7b8b226d68831ac347118db711950fa20ea9945655acea"
   },
   {
     "archivo": "Fase 1/Evidencias Individuales/Fuentes_Valenzuela_Juan_Pablo_1.3_APT122_AutoevaluacionFase1.docx",
-    "bytes": 37393,
-    "sha256": "bdc6e29855466e20f29d37cfeec814caa1213282c48756ffa8cb8461505793cc"
+    "bytes": 61343,
+    "sha256": "58c006aaec6cf77b4861bed946730b241d1eb29fc4bc5788f04478d29ac73052"
   },
   {
     "archivo": "Fase 1/Evidencias Individuales/Mendez_Sebastian_1.1_APT122_AutoevaluacionCompetenciasFase1.docx",
-    "bytes": 37689,
-    "sha256": "c8c4be3268d445e1b7f621194b1a42261df7d545541d9468a05243153568975d"
+    "bytes": 890304,
+    "sha256": "4e16afbc5f70cec027cfb0abc36f5ae90bd9ddfc7e232626e2498de0efc41a5b"
   },
   {
     "archivo": "Fase 1/Evidencias Individuales/Mendez_Sebastian_1.2_APT122_DiarioReflexionFase1.docx",
-    "bytes": 37425,
-    "sha256": "5f98afb96ae88e51a27bb6e975634f46cd739cc306fdcab1e19c3ee25487446c"
+    "bytes": 1290333,
+    "sha256": "f7e9855d8f1fa76f005274ff92793145350f2765d79a173a1d885404436006a9"
   },
   {
     "archivo": "Fase 1/Evidencias Individuales/Mendez_Sebastian_1.3_APT122_AutoevaluacionFase1.docx",
-    "bytes": 37384,
-    "sha256": "fd8a3328585d88dfab294e8133da93e2c52e3976d6288594eb4d3ccf6fec72c3"
+    "bytes": 61332,
+    "sha256": "2543857fe31247f4becff6bb4b13e621a71c77b40e5d3f856d93106f3baf7d30"
   },
   {
     "archivo": "Fase 1/Evidencias Individuales/README.md",
-    "bytes": 1414,
-    "sha256": "fdb169fff22f142a04518696341b5070f8bf2da143d57e7fc997e93f8049abd7"
+    "bytes": 1228,
+    "sha256": "884d0ac8004a5b7ee813db6144daba599a14dc7084b974824e114e3c7c4be14f"
   },
   {
     "archivo": "Fase 2/Evidencias Grupales/2.4_GuiaEstudiante_Fase 2_DesarrolloProyecto APT (Español).docx",
@@ -65,29 +60,24 @@
     "sha256": "d90bae0b41b86340031533ff0e4684d58947aca11fed339d0f16f2525b8963d3"
   },
   {
-    "archivo": "Fase 2/Evidencias Grupales/2.6_Informe_Final_Proyecto_APT_FurgonApp.docx",
-    "bytes": 40070,
-    "sha256": "2c82fa27f2abb1d5afbe78f15424ccbba4ed5130d31d5b315b2c9d4338faaa72"
-  },
-  {
     "archivo": "Fase 2/Evidencias Grupales/README.md",
-    "bytes": 677,
-    "sha256": "30115996164ab215ceb5d9b21797912f2a56f8f5b3ba1aba6c5d000467df8288"
+    "bytes": 459,
+    "sha256": "5ed3e7001fe14450fdc46126e4326df364dfde83a98aea1b0814ee3380f3c7a2"
   },
   {
     "archivo": "Fase 2/Evidencias Individuales/Fuentes_Valenzuela_Juan_Pablo_2.1_APT122_DiarioReflexionFase2.docx",
-    "bytes": 37598,
-    "sha256": "ec4360aa6355f4710f020a23faf99fa91e06d74919b61e9184ac312ba38d86a2"
+    "bytes": 1287674,
+    "sha256": "b7d449c03527e42b7ba09ece6a83a4ba1527a77abf558c144cef1260ddec2d83"
   },
   {
     "archivo": "Fase 2/Evidencias Individuales/Mendez_Sebastian_2.1_APT122_DiarioReflexionFase2.docx",
-    "bytes": 37564,
-    "sha256": "1698390cdd4e048d1df18477ecaae4352aba7e3b0f5a74d82b64adb0f23fe3cc"
+    "bytes": 1287662,
+    "sha256": "08689bbed30ac5422a9ecef2b2ddea7f6690847acd1c8d9779ad979bc676f519"
   },
   {
     "archivo": "Fase 2/Evidencias Individuales/README.md",
-    "bytes": 862,
-    "sha256": "e22bd0a3ad8e78c5ab2378b0b5e3f824bfca044524df07ea918a6e21340248d3"
+    "bytes": 680,
+    "sha256": "30f8467328c082a9d13e141307f9e0ea6b5fb208dba04894a43cc93414d37a0d"
   },
   {
     "archivo": "Fase 2/Evidencias Proyecto/Documentacion/DISENO.md",
@@ -130,11 +120,6 @@
     "sha256": "88b414ca54ca500ddd0fefd6155e3294581743a707df766f629c25f51fc29d17"
   },
   {
-    "archivo": "Fase 2/Evidencias Proyecto/Presentación Proyecto.pptx",
-    "bytes": 187559,
-    "sha256": "bea6127ab5a7360279f5ad3e24599c19a38a6a7c75eda27a07b2578df6169138"
-  },
-  {
     "archivo": "Fase 2/Evidencias Proyecto/Sistema/Aplicacion/README.md",
     "bytes": 935,
     "sha256": "e6e405bbd071e11ca7c2f4fa9dc8002ba7ae81907962317bf3ebe574c5d1a00b"
@@ -145,29 +130,39 @@
     "sha256": "13c7486f5f6f81efd1f0a21414584b24db18ce973ec1c6bbbd8db07e8ed7c58f"
   },
   {
-    "archivo": "Fase 3/Evidencias Grupales/Presentación Final del proyecto (Español).pptx",
-    "bytes": 194241,
-    "sha256": "2c1f003b4dd17197306e1b9bae6b2198b2e1abb0b4aedd65a95d73d93a07333e"
-  },
-  {
     "archivo": "Fase 3/Evidencias Grupales/README.md",
-    "bytes": 419,
-    "sha256": "8bd7343b557156a213fba4caf115a8b1f56eafe955231ecc35fe5bce6c0aba14"
+    "bytes": 204,
+    "sha256": "20730710c61f9275614eaf2c29ea57245e579ac7856936a9272a50709600007c"
   },
   {
     "archivo": "Fase 3/Evidencias Individuales/Fuentes_Valenzuela_Juan_Pablo_3.1_APT122_DiarioReflexionFase3.docx",
-    "bytes": 37511,
-    "sha256": "b18d4ea6dd06824286c4f2682c100ca7fc6b3bf75aad56531215e089ffab827f"
+    "bytes": 1287661,
+    "sha256": "e41653cf2f8df403b2c12da9064fcefe6b9b98cf6fc210b33d1962ef0c98dcd7"
   },
   {
     "archivo": "Fase 3/Evidencias Individuales/Mendez_Sebastian_3.1_APT122_DiarioReflexionFase3.docx",
-    "bytes": 37494,
-    "sha256": "ba1732960f421ab2704927fb274525730f164a3345314092b49f7e75022039f2"
+    "bytes": 1287666,
+    "sha256": "8ecc35aad63b38bcf8c01977e0d06882d656d4cb8997e383a260e474d1a0fcb8"
   },
   {
     "archivo": "Fase 3/Evidencias Individuales/README.md",
-    "bytes": 862,
-    "sha256": "44c9ac6018c70f410d58637dfbb5144cf80f47f0f0ae09d4810a39604e80f088"
+    "bytes": 680,
+    "sha256": "8ec327ca9d4e2f62f6dca346af0f09f32f885af0975c856773337709abfcdb6d"
+  },
+  {
+    "archivo": "Plantillas Oficiales/1.1_APT122_AutoevaluacionCompetenciasFase1.docx",
+    "bytes": 894309,
+    "sha256": "a4e22500de5ca80ffe13714f48a865438a36c4606cf9dedbbb7ea97a301f321f"
+  },
+  {
+    "archivo": "Plantillas Oficiales/1.2_APT122_DiarioReflexionFase1.docx",
+    "bytes": 1295330,
+    "sha256": "d57d4561472d3661142b87d1692552b5bb3102870ef2d80ef67ce8989ffd544e"
+  },
+  {
+    "archivo": "Plantillas Oficiales/1.3_APT122_AutoevaluaciónFase1.docx",
+    "bytes": 67591,
+    "sha256": "16d8df455542c2654b42f8c31217c2368e94f4985939554c5aaa0bf89a27b379"
   },
   {
     "archivo": "Plantillas Oficiales/1.4_APT122_FormativaFase1.docx",
@@ -178,6 +173,11 @@
     "archivo": "Plantillas Oficiales/1.5_GuiaEstudiante_Fase 1_Definicion Proyecto APT.docx",
     "bytes": 86807,
     "sha256": "9b230020162f90d29dee4e18d50a40adec50601c4e84c8b88e9a25b841f985b0"
+  },
+  {
+    "archivo": "Plantillas Oficiales/2.1_APT122_DiarioReflexionFase2.docx",
+    "bytes": 1293041,
+    "sha256": "6c2d2a9c91e120e3b2d7e0bdb4d7a7de226c5a60278774056d211dad4bf25543"
   },
   {
     "archivo": "Plantillas Oficiales/2.3_APT122_FormativaAvance Fase2.docx",
@@ -195,23 +195,33 @@
     "sha256": "6a6acf4c6eafcc20da79646fb7a96bf2588a6db291b0df979cc1bb7a46316cfc"
   },
   {
+    "archivo": "Plantillas Oficiales/3.1_APT122_DiarioReflexionFase3.docx",
+    "bytes": 1292818,
+    "sha256": "e7c2b5c3e15da9c3180046aabee347efbd106a584d4d24b854a74699ebde5edb"
+  },
+  {
     "archivo": "Plantillas Oficiales/3.3_Estudiante_Fase 3_Presentacion Proyecto APT.docx",
     "bytes": 76918,
     "sha256": "6b7319314646260f6d7770c617a9078fdd757a4bf02b801a53f793c92e6a66ab"
   },
   {
     "archivo": "Plantillas Oficiales/README.md",
-    "bytes": 2672,
-    "sha256": "6592afc816350effe569c7cccfa0dcfc94909f2f8750cd240e4be4b52a3383de"
+    "bytes": 3238,
+    "sha256": "f3ba89b375225dde675dc5830c25a9cb9144f327a1daa0897724bcfa5036408c"
   },
   {
     "archivo": "Plantillas Oficiales/SHA256.json",
-    "bytes": 717,
-    "sha256": "0c5c94f4baa2a8ec95145c34be0adb58fe8dd0a6931a896fa0dbea0debfb01a0"
+    "bytes": 1701,
+    "sha256": "5535b184b8714c687a2b621bf68c60e3672391961a0860fde8a85e961f9c2a36"
   },
   {
     "archivo": "README.md",
-    "bytes": 3596,
-    "sha256": "6f005565073e138b04b552dc213acd10f091f2db1121691c9c31afbd6819b787"
+    "bytes": 3788,
+    "sha256": "811dafb1ad5b5705db19ac6032bc98b767c96f1667494b19babb97bafd17ba1d"
+  },
+  {
+    "archivo": "TRAZABILIDAD-PLANTILLAS.json",
+    "bytes": 6910,
+    "sha256": "353ed9927027cadb11bb98afd9ed37655017eed0488af0d4b8a80485e9f2d78a"
   }
 ]

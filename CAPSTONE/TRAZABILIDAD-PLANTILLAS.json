@@ -1,0 +1,136 @@
+[
+  {
+    "original": "Plantillas Oficiales/1.1_APT122_AutoevaluacionCompetenciasFase1.docx",
+    "original_sha256": "a4e22500de5ca80ffe13714f48a865438a36c4606cf9dedbbb7ea97a301f321f",
+    "completado": "Fase 1/Evidencias Individuales/Fuentes_Valenzuela_Juan_Pablo_1.1_APT122_AutoevaluacionCompetenciasFase1.docx",
+    "completado_sha256": "d1534b243a2daefa48a99faf6367d9250690027c2f3fd09dd35401844e2bfabb",
+    "partes_modificadas": [
+      "word/document.xml"
+    ],
+    "otras_partes_identicas": true,
+    "preguntas_y_rubrica_conservadas": true
+  },
+  {
+    "original": "Plantillas Oficiales/1.2_APT122_DiarioReflexionFase1.docx",
+    "original_sha256": "d57d4561472d3661142b87d1692552b5bb3102870ef2d80ef67ce8989ffd544e",
+    "completado": "Fase 1/Evidencias Individuales/Fuentes_Valenzuela_Juan_Pablo_1.2_APT122_DiarioReflexionFase1.docx",
+    "completado_sha256": "64260858beeccf10fe7b8b226d68831ac347118db711950fa20ea9945655acea",
+    "partes_modificadas": [
+      "word/document.xml"
+    ],
+    "otras_partes_identicas": true,
+    "preguntas_y_rubrica_conservadas": true,
+    "ajuste_paginacion": "Retirados párrafos vacíos sobrantes en casillas de respuesta; preguntas y formato conservados."
+  },
+  {
+    "original": "Plantillas Oficiales/1.3_APT122_AutoevaluaciónFase1.docx",
+    "original_sha256": "16d8df455542c2654b42f8c31217c2368e94f4985939554c5aaa0bf89a27b379",
+    "completado": "Fase 1/Evidencias Individuales/Fuentes_Valenzuela_Juan_Pablo_1.3_APT122_AutoevaluacionFase1.docx",
+    "completado_sha256": "58c006aaec6cf77b4861bed946730b241d1eb29fc4bc5788f04478d29ac73052",
+    "partes_modificadas": [
+      "word/document.xml"
+    ],
+    "otras_partes_identicas": true,
+    "preguntas_y_rubrica_conservadas": true
+  },
+  {
+    "original": "Plantillas Oficiales/2.1_APT122_DiarioReflexionFase2.docx",
+    "original_sha256": "6c2d2a9c91e120e3b2d7e0bdb4d7a7de226c5a60278774056d211dad4bf25543",
+    "completado": "Fase 2/Evidencias Individuales/Fuentes_Valenzuela_Juan_Pablo_2.1_APT122_DiarioReflexionFase2.docx",
+    "completado_sha256": "b7d449c03527e42b7ba09ece6a83a4ba1527a77abf558c144cef1260ddec2d83",
+    "partes_modificadas": [
+      "word/document.xml"
+    ],
+    "otras_partes_identicas": true,
+    "preguntas_y_rubrica_conservadas": true,
+    "ajuste_paginacion": "Retirados párrafos vacíos sobrantes en casillas de respuesta; preguntas y formato conservados."
+  },
+  {
+    "original": "Plantillas Oficiales/3.1_APT122_DiarioReflexionFase3.docx",
+    "original_sha256": "e7c2b5c3e15da9c3180046aabee347efbd106a584d4d24b854a74699ebde5edb",
+    "completado": "Fase 3/Evidencias Individuales/Fuentes_Valenzuela_Juan_Pablo_3.1_APT122_DiarioReflexionFase3.docx",
+    "completado_sha256": "e41653cf2f8df403b2c12da9064fcefe6b9b98cf6fc210b33d1962ef0c98dcd7",
+    "partes_modificadas": [
+      "word/document.xml"
+    ],
+    "otras_partes_identicas": true,
+    "preguntas_y_rubrica_conservadas": true
+  },
+  {
+    "original": "Plantillas Oficiales/1.1_APT122_AutoevaluacionCompetenciasFase1.docx",
+    "original_sha256": "a4e22500de5ca80ffe13714f48a865438a36c4606cf9dedbbb7ea97a301f321f",
+    "completado": "Fase 1/Evidencias Individuales/Mendez_Sebastian_1.1_APT122_AutoevaluacionCompetenciasFase1.docx",
+    "completado_sha256": "4e16afbc5f70cec027cfb0abc36f5ae90bd9ddfc7e232626e2498de0efc41a5b",
+    "partes_modificadas": [
+      "word/document.xml"
+    ],
+    "otras_partes_identicas": true,
+    "preguntas_y_rubrica_conservadas": true
+  },
+  {
+    "original": "Plantillas Oficiales/1.2_APT122_DiarioReflexionFase1.docx",
+    "original_sha256": "d57d4561472d3661142b87d1692552b5bb3102870ef2d80ef67ce8989ffd544e",
+    "completado": "Fase 1/Evidencias Individuales/Mendez_Sebastian_1.2_APT122_DiarioReflexionFase1.docx",
+    "completado_sha256": "f7e9855d8f1fa76f005274ff92793145350f2765d79a173a1d885404436006a9",
+    "partes_modificadas": [
+      "word/document.xml"
+    ],
+    "otras_partes_identicas": true,
+    "preguntas_y_rubrica_conservadas": true,
+    "ajuste_paginacion": "Retirados párrafos vacíos sobrantes en casillas de respuesta; preguntas y formato conservados."
+  },
+  {
+    "original": "Plantillas Oficiales/1.3_APT122_AutoevaluaciónFase1.docx",
+    "original_sha256": "16d8df455542c2654b42f8c31217c2368e94f4985939554c5aaa0bf89a27b379",
+    "completado": "Fase 1/Evidencias Individuales/Mendez_Sebastian_1.3_APT122_AutoevaluacionFase1.docx",
+    "completado_sha256": "2543857fe31247f4becff6bb4b13e621a71c77b40e5d3f856d93106f3baf7d30",
+    "partes_modificadas": [
+      "word/document.xml"
+    ],
+    "otras_partes_identicas": true,
+    "preguntas_y_rubrica_conservadas": true
+  },
+  {
+    "original": "Plantillas Oficiales/2.1_APT122_DiarioReflexionFase2.docx",
+    "original_sha256": "6c2d2a9c91e120e3b2d7e0bdb4d7a7de226c5a60278774056d211dad4bf25543",
+    "completado": "Fase 2/Evidencias Individuales/Mendez_Sebastian_2.1_APT122_DiarioReflexionFase2.docx",
+    "completado_sha256": "08689bbed30ac5422a9ecef2b2ddea7f6690847acd1c8d9779ad979bc676f519",
+    "partes_modificadas": [
+      "word/document.xml"
+    ],
+    "otras_partes_identicas": true,
+    "preguntas_y_rubrica_conservadas": true,
+    "ajuste_paginacion": "Retirados párrafos vacíos sobrantes en casillas de respuesta; preguntas y formato conservados."
+  },
+  {
+    "original": "Plantillas Oficiales/3.1_APT122_DiarioReflexionFase3.docx",
+    "original_sha256": "e7c2b5c3e15da9c3180046aabee347efbd106a584d4d24b854a74699ebde5edb",
+    "completado": "Fase 3/Evidencias Individuales/Mendez_Sebastian_3.1_APT122_DiarioReflexionFase3.docx",
+    "completado_sha256": "8ecc35aad63b38bcf8c01977e0d06882d656d4cb8997e383a260e474d1a0fcb8",
+    "partes_modificadas": [
+      "word/document.xml"
+    ],
+    "otras_partes_identicas": true,
+    "preguntas_y_rubrica_conservadas": true
+  },
+  {
+    "original": "Plantillas Oficiales/1.5_GuiaEstudiante_Fase 1_Definicion Proyecto APT.docx",
+    "original_sha256": "9b230020162f90d29dee4e18d50a40adec50601c4e84c8b88e9a25b841f985b0",
+    "completado": "Fase 1/Evidencias Grupales/1.5_GuiaEstudiante_Fase 1_Definicion Proyecto APT (Español).docx",
+    "completado_sha256": "de05c15335bf25f730f025922dc01b00bb120961fc8aa4f1f8984a8d07d02968",
+    "partes_modificadas": [
+      "word/document.xml"
+    ],
+    "otras_partes_identicas": true
+  },
+  {
+    "original": "Plantillas Oficiales/2.4_GuiaEstudiante_Fase 2_DesarrolloProyecto APT.docx",
+    "original_sha256": "8b1647ab6c8c4766d0949f6507d79eda92eb9581b3a7e6b6bc4fa566205e1294",
+    "completado": "Fase 2/Evidencias Grupales/2.4_GuiaEstudiante_Fase 2_DesarrolloProyecto APT (Español).docx",
+    "completado_sha256": "d90bae0b41b86340031533ff0e4684d58947aca11fed339d0f16f2525b8963d3",
+    "partes_modificadas": [
+      "word/document.xml"
+    ],
+    "otras_partes_identicas": true
+  }
+]

@@ -1,8 +1,46 @@
-{
-  "1.4_APT122_FormativaFase1.docx": "e48d8ede25357836cdf9df87b3bdb002a2c25bb5868bee923f39db45329c0127",
-  "1.5_GuiaEstudiante_Fase 1_Definicion Proyecto APT.docx": "9b230020162f90d29dee4e18d50a40adec50601c4e84c8b88e9a25b841f985b0",
-  "2.3_APT122_FormativaAvance Fase2.docx": "467610fb76ae26c02b7e44fcc59c83febd27f5f8b22f951088ed4589d1014530",
-  "2.4_GuiaEstudiante_Fase 2_DesarrolloProyecto APT.docx": "8b1647ab6c8c4766d0949f6507d79eda92eb9581b3a7e6b6bc4fa566205e1294",
-  "2.5_APT122_Sumativa Avance Fase2.pdf": "6a6acf4c6eafcc20da79646fb7a96bf2588a6db291b0df979cc1bb7a46316cfc",
-  "3.3_Estudiante_Fase 3_Presentacion Proyecto APT.docx": "6b7319314646260f6d7770c617a9078fdd757a4bf02b801a53f793c92e6a66ab"
-}
+[
+  {
+    "archivo": "1.1_APT122_AutoevaluacionCompetenciasFase1.docx",
+    "sha256": "a4e22500de5ca80ffe13714f48a865438a36c4606cf9dedbbb7ea97a301f321f"
+  },
+  {
+    "archivo": "1.2_APT122_DiarioReflexionFase1.docx",
+    "sha256": "d57d4561472d3661142b87d1692552b5bb3102870ef2d80ef67ce8989ffd544e"
+  },
+  {
+    "archivo": "1.3_APT122_AutoevaluaciónFase1.docx",
+    "sha256": "16d8df455542c2654b42f8c31217c2368e94f4985939554c5aaa0bf89a27b379"
+  },
+  {
+    "archivo": "1.4_APT122_FormativaFase1.docx",
+    "sha256": "e48d8ede25357836cdf9df87b3bdb002a2c25bb5868bee923f39db45329c0127"
+  },
+  {
+    "archivo": "1.5_GuiaEstudiante_Fase 1_Definicion Proyecto APT.docx",
+    "sha256": "9b230020162f90d29dee4e18d50a40adec50601c4e84c8b88e9a25b841f985b0"
+  },
+  {
+    "archivo": "2.1_APT122_DiarioReflexionFase2.docx",
+    "sha256": "6c2d2a9c91e120e3b2d7e0bdb4d7a7de226c5a60278774056d211dad4bf25543"
+  },
+  {
+    "archivo": "2.3_APT122_FormativaAvance Fase2.docx",
+    "sha256": "467610fb76ae26c02b7e44fcc59c83febd27f5f8b22f951088ed4589d1014530"
+  },
+  {
+    "archivo": "2.4_GuiaEstudiante_Fase 2_DesarrolloProyecto APT.docx",
+    "sha256": "8b1647ab6c8c4766d0949f6507d79eda92eb9581b3a7e6b6bc4fa566205e1294"
+  },
+  {
+    "archivo": "2.5_APT122_Sumativa Avance Fase2.pdf",
+    "sha256": "6a6acf4c6eafcc20da79646fb7a96bf2588a6db291b0df979cc1bb7a46316cfc"
+  },
+  {
+    "archivo": "3.1_APT122_DiarioReflexionFase3.docx",
+    "sha256": "e7c2b5c3e15da9c3180046aabee347efbd106a584d4d24b854a74699ebde5edb"
+  },
+  {
+    "archivo": "3.3_Estudiante_Fase 3_Presentacion Proyecto APT.docx",
+    "sha256": "6b7319314646260f6d7770c617a9078fdd757a4bf02b801a53f793c92e6a66ab"
+  }
+]

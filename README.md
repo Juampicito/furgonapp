@@ -2,7 +2,7 @@
 
 ## Portafolio académico
 
-La documentación CAPSTONE se organiza en [fases, evidencias y control de entregables](CAPSTONE/README.md). Incluye las tres fases, documentos Word, presentaciones y evidencias técnicas. Los pendientes de plantillas y revisión personal están identificados; no es una entrega académica validada.
+La documentación CAPSTONE se organiza en [fases, evidencias y control de entregables](CAPSTONE/README.md). Incluye las tres fases, doce Word completados sobre plantillas oficiales y evidencias técnicas complementarias. Las presentaciones y el informe final 2.6 están pendientes de sus formatos oficiales. Los pendientes de plantillas y revisión personal están identificados; no es una entrega académica validada.
 
 Plataforma de transporte escolar con Next.js/React/TypeScript, Spring Boot 3/Java 17 y PostgreSQL. Incluye registro e inicio de sesión con contraseña, permisos por rol, perfiles de furgonistas, revisión de documentos, instituciones, búsqueda con Google Maps, cotizaciones y reserva atómica de cupos.
 

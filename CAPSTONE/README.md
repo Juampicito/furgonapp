@@ -2,11 +2,11 @@
 
 ## Estado de preparación
 
-Portafolio preparado el 21 de octubre de 2026: **13 Word elaborados, tres presentaciones y documentación técnica**, organizados por fases. Se descargaron seis recursos oficiales. Las guías 1.5 y 2.4 conservan las plantillas; los individuales y el informe final son documentos propios para cotejar con los formatos faltantes. No es una entrega validada por el docente ni se han enviado actividades al aula.
+Portafolio corregido el 21 de octubre de 2026: **12 Word completados sobre plantillas oficiales** (diez individuales y las guías 1.5 y 2.4), más documentación técnica complementaria. Se conservan once recursos oficiales sin editar. Los documentos individuales anteriores fueron reemplazados por copias rellenadas de los originales; se retiraron de las carpetas de entrega el informe 2.6 y las tres presentaciones recreadas, pendientes de sus formatos oficiales. No es una entrega validada por el docente y no se enviaron actividades al aula.
 
 Juan Pablo Fuentes Valenzuela asume principalmente el desarrollo informático. Sebastian Mendez, documentación y preparación del despliegue, según lo informado por Juan Pablo. La descripción metodológica es iterativa e incremental; no se atribuyen ceremonias ni certificación Scrum. Sede, calendario definitivo y datos académicos faltantes quedan por confirmar.
 
-Las ampliaciones geográficas de la copia local se identifican como tales: publicar este portafolio no publica automáticamente ese código. Los resultados históricos y tareas propuestas se distinguen de los resultados verificados.
+Las ampliaciones geográficas se publican junto con la corrección del portafolio el 28 de octubre de 2026. Los resultados históricos y tareas propuestas se distinguen de los resultados verificados.
 
 ## Índice por fase
 
@@ -19,10 +19,11 @@ Las ampliaciones geográficas de la copia local se identifican como tales: publi
 ## Control de entrega
 
 - [Entregables preparados y pendientes](CONTROL-ENTREGABLES.md).
+- [Comprobación de origen y conservación de las plantillas](TRAZABILIDAD-PLANTILLAS.json).
 - [Originales descargados y fuentes del aula](Plantillas%20Oficiales/README.md).
 - [Requisitos, diagramas, pruebas, manuales y guion](Fase%202/Evidencias%20Proyecto/Documentacion/README.md).
 
-Cada integrante debe revisar sus diarios y autoevaluaciones: son borradores a partir de los roles informados. Faltan cotejar formularios individuales y guía final, además de recibir las planillas Excel del docente. Los espacios de notas y retroalimentación del evaluador no se rellenan por el equipo.
+Cada integrante debe revisar sus diarios y autoevaluaciones: son borradores a partir de los roles informados. Falta obtener la guía final 2.6, las plantillas de presentación y las planillas Excel del docente. Los espacios de notas y retroalimentación del evaluador no se rellenan por el equipo.
 
 No se incorporan contraseñas, claves API, base privada, documentos reales de conductores ni datos de familias. El RUT no se publica. No se inventan entrevistas, mediciones, resultados de defensa ni despliegues exitosos.
 
